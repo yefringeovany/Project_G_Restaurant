@@ -1,0 +1,109 @@
+<div class="header pb-4 pt-1 pt-lg-4 d-flex align-items-center"
+  style="min-height: 10px; background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <p class="text-white mt-4 mb-0">Por favor, ingresa la información del nuevo menú</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Boton para crear un nuevo menu -->
+<button class="btn btn-success mt-3 mb-3" *ngIf="botonCrearNuevoMenu"
+  (click)="formularioMenu = true; botonCrearNuevoMenu = false; tablaMenus = false">Crear nuevo
+  menú
+</button>
+
+<!-- Formulario de Menus -->
+<div class="container-fluid mt--7" *ngIf="formularioMenu">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="alert alert-success" *ngIf="menuCreado && !menuActualizado">
+            Menú creado con éxito!
+          </div>
+          <div class="alert alert-success" *ngIf="menuActualizado && !menuCreado">
+            Menú actualizado con éxito!
+          </div>
+          <form (ngSubmit)="registroMenus(categoria_id, nombre, descripcion, precio, estado)">
+            <div class="form-group">
+              <label for="categoria">Categoría</label>
+              <select id="categoria" class="form-control" [(ngModel)]="categoria_id" name="categoria_id">
+                <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" class="form-control" placeholder="Nombre" [(ngModel)]="nombre"
+                name="nombre">
+            </div>
+            <div class="form-group">
+              <label for="descripcion">Descripción</label>
+              <input type="text" id="descripcion" class="form-control" placeholder="Descripción"
+                [(ngModel)]="descripcion" name="descripcion">
+            </div>
+            <div class="form-group">
+              <label for="precio">Precio</label>
+              <input type="number" id="precio" class="form-control" placeholder="Precio" [(ngModel)]="precio"
+                name="precio">
+            </div>
+            <div class="form-group">
+              <label for="estado">Estado</label>
+              <select id="estado" class="form-control" [(ngModel)]="estado" name="rol">
+                <option value="ACTIVO">ACTIVO</option>
+                <option value="INACTIVO">INACTIVO</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">{{ idMenuEditar !== null ? 'Actualizar Menú' : 'Crear Menú' }}
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabla de Categorias -->
+<div class="container-fluid mt-5" *ngIf="tablaMenus">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <h2>Lista de menús</h2>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Categoria</th>
+              <th>Nombre</th>
+              <th>Descripción</th>
+              <th>Precio</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let menu of menus; let i = index">
+              <td>{{ menu.id }}</td>
+              <td>{{ obtenerNombreCategoria(menu.categoria_id) }}</td>
+              <td>{{ menu.nombre }}</td>
+              <td>{{ menu.descripcion }}</td>
+              <td>{{ menu.precio }}</td>
+              <td>{{ menu.estado }}</td>
+              <td>
+                <!-- Botones de acciones -->
+                <button class="btn btn-primary btn-sm" (click)="editarMenu(menu)">Editar</button>
+                <button class="btn btn-danger btn-sm" (click)="eliminarMenu(menu.id)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

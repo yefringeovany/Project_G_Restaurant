@@ -1,0 +1,110 @@
+<div class="header pb-4 pt-1 pt-lg-4 d-flex align-items-center"
+  style="min-height: 10px; background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <p class="text-white mt-4 mb-0">Por favor, ingresa la información en el POS</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Formulario de Menus -->
+<div class="container-fluid mt--7">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <form (ngSubmit)="crearOrden()">
+            <!-- Seleccionar categoria -->
+            <div class="form-group">
+              <label>Selecciona una categoría:</label>
+              <select class="form-control" [(ngModel)]="categoriaSeleccionadaId"
+                (change)="categoriaSeleccionada($event.target.value)">
+                <option *ngFor="let categoria of categorias" [value]="categoria.id">
+                  {{categoria.nombre}}
+                </option>
+              </select>
+            </div>
+
+            <!-- Seleccionar menu -->
+            <div class="form-group">
+              <label>Selecciona un menú:</label>
+              <select class="form-control" [(ngModel)]="menuSeleccionadoId"
+                (change)="menuSeleccionado($event.target.value)">
+                <option *ngFor="let menu of menus" [value]="menu.id">
+                  {{menu.nombre}}
+                </option>
+              </select>
+            </div>
+
+            <!-- Agregar cantidad -->
+            <div class="form-group">
+              <label>Cantidad:</label>
+              <input type="number" class="form-control" [(ngModel)]="cantidad" name="cantidad">
+            </div>
+
+            <!-- Visualizacion monto total -->
+            <div class="form-group">
+              <label>Monto total:</label>
+              <input type="number" class="form-control" [(ngModel)]="montoTotal" name="montoTotal" disabled>
+            </div>
+
+            <!-- Agregar Pago -->
+            <div class="form-group">
+              <label>Pago:</label>
+              <input type="number" class="form-control" [(ngModel)]="pagado" name="pagado">
+            </div>
+
+            <!-- Visualizacion cambio -->
+            <div class="form-group">
+              <label>Cambio:</label>
+              <input type="number" class="form-control" [(ngModel)]="cambio" name="cambio" disabled>
+            </div>
+
+            <div class="form-group">
+              <label for="rol">Estado</label>
+              <select id="estado" class="form-control" [(ngModel)]="estado" name="estado">
+                <option value="PENDIENTE">PENDIENTE</option>
+                <option value="ENTREGADO">ENTREGADO</option>
+              </select>
+            </div>
+
+            <!-- Botón para agregar item a la orden -->
+            <button type="button" class="btn btn-primary" (click)="agregarItem()">Agregar a la orden</button>
+
+            <!-- Botón para calcular el cambio -->
+            <button type="button" class="btn btn-info" (click)="calcularCambio()">Calcular Cambio</button>
+
+            <!-- Botón para crear la orden -->
+            <button type="button" class="btn btn-success" (click)="crearOrden()">Crear orden</button>
+          </form>
+
+          <!-- Tabla para mostrar elementos agregados a la orden -->
+          <div *ngIf="itemsAgregados.length > 0" class="mt-4">
+            <h4>Elementos agregados a la orden:</h4>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Categoría</th>
+                  <th>Menú</th>
+                  <th>Cantidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of itemsAgregados">
+                  <td>{{ item.categoria }}</td>
+                  <td>{{ item.menu }}</td>
+                  <td>{{ item.cantidad }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

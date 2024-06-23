@@ -1,0 +1,49 @@
+<div class="header pb-4 pt-1 pt-lg-4 d-flex align-items-center"
+     style="min-height: 10px; background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <p class="text-white mt-4 mb-0">Informacion de las ordenes!</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabla de Ordenes -->
+<div class="container-fluid mt-5" *ngIf="tablaOrdenes">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <h2>Lista de órdenes</h2>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Monto Total</th>
+            <th>Pagado</th>
+            <th>Cambio</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let orden of ordenes; let i = index">
+            <td>{{ orden.id }}</td>
+            <td>{{ orden.monto_total }}</td>
+            <td>{{ orden.pagado }}</td>
+            <td>{{ orden.cambio }}</td>
+            <td>{{ orden.estado }}</td>
+            <td>
+              <!-- Botones de acciones -->
+              <button class="btn btn-danger btn-sm" (click)="eliminarOrden(orden.id)">Eliminar</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

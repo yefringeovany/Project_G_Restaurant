@@ -1,0 +1,95 @@
+<div class="header pb-4 pt-1 pt-lg-4 d-flex align-items-center"
+     style="min-height: 10px; background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <p class="text-white mt-4 mb-0">Por favor, ingresa la información de la nueva categoría</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Boton para crear una nueva categoría -->
+<button class="btn btn-success mt-3 mb-3" *ngIf="botonCrearNuevaCategoria"
+        (click)="formularioCategoria = true; botonCrearNuevaCategoria = false; tablaCategorias = false">Crear nueva
+  categoría
+</button>
+
+<!-- Formulario de Categorias -->
+<div class="container-fluid mt--7" *ngIf="formularioCategoria">
+  <div class="row justify-content-center">
+    <div class="col-lg-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <div class="alert alert-success" *ngIf="categoriaCreada && !categoriaActualizada">
+            Categoría creada con éxito!
+          </div>
+          <div class="alert alert-success" *ngIf="categoriaActualizada && !categoriaCreada">
+            Categoría actualizada con éxito!
+          </div>
+          <form (ngSubmit)="registroCategorias(nombre, descripcion, estado)">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" class="form-control" placeholder="Nombre"
+                     [(ngModel)]="nombre" name="nombre">
+            </div>
+            <div class="form-group">
+              <label for="descripcion">Descripción</label>
+              <input type="text" id="descripcion" class="form-control" placeholder="Descripción"
+                     [(ngModel)]="descripcion" name="descripcion">
+            </div>
+            <div class="form-group">
+              <label for="estado">Estado</label>
+              <select id="estado" class="form-control" [(ngModel)]="estado" name="rol">
+                <option value="ACTIVO">ACTIVO</option>
+                <option value="INACTIVO">INACTIVO</option>
+              </select>
+            </div>
+            <button type="submit"
+                    class="btn btn-primary">{{ idCategoriaEditar !== null ? 'Actualizar Categoría' : 'Crear Categoría' }}
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabla de Categorias -->
+<div class="container-fluid mt-5" *ngIf="tablaCategorias">
+  <div class="row justify-content-center">
+    <div class="col-lg-10">
+      <h2>Lista de categorías</h2>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let categoria of categorias; let i = index">
+            <td>{{ categoria.id }}</td>
+            <td>{{ categoria.nombre }}</td>
+            <td>{{ categoria.descripcion }}</td>
+            <td>{{ categoria.estado }}</td>
+            <td>
+              <!-- Botones de acciones -->
+              <button class="btn btn-primary btn-sm" (click)="editarCategoria(categoria)">Editar</button>
+              <button class="btn btn-danger btn-sm" (click)="eliminarCategoria(categoria.id)">Eliminar</button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
