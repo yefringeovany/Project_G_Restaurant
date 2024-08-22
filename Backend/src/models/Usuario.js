@@ -39,12 +39,19 @@ const Usuario = sequelize.define('usuario', {
     type: DataTypes.ENUM('SUPER_ADMINISTRADOR', 'ADMINISTRADOR', 'CHEF', 'MESERO'),
     allowNull: false
   }
-}, {
+}, 
+{
   freezeTableName: true,
   hooks: {
     beforeCreate: async (usuario) => {
       const salt = await bcrypt.genSalt();
       usuario.contrasenia = await bcrypt.hash(usuario.contrasenia, salt);
+    },
+    beforeUpdate: async (usuario) => {
+      if (usuario.changed('contrasenia')){
+        const salt = await bcrypt.genSalt();
+        usuario.contrasenia = await bcrypt.hash(usuario.contrasenia, salt);
+      }
     }
   }
 });

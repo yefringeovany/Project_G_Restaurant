@@ -17,14 +17,14 @@
           <div class="text-center text-muted mb-4">
             <small>Inicia sesión con tus credenciales</small>
           </div>
-          <form (ngSubmit)="login(correo_electronico, contrasenia)" role="form">
+          <form (ngSubmit)="login()" role="form">
             <div class="form-group mb-3">
               <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                 </div>
                 <input class="form-control" placeholder="Correo Electrónico" type="email"
-                       [(ngModel)]="correo_electronico" name="correo_electronico">
+                       [(ngModel)]="correo_electronico" name="correo_electronico" required>
               </div>
             </div>
             <div class="form-group">
@@ -32,8 +32,8 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-                <input class="form-control" placeholder="Contraseña" type="password" [(ngModel)]="contrasenia"
-                       name="contrasenia">
+                <input class="form-control" placeholder="Contraseña" type="password"
+                       [(ngModel)]="contrasenia" name="contrasenia" required>
               </div>
             </div>
             <div class="text-center">
@@ -43,9 +43,7 @@
         </div>
       </div>
       <div class="row mt-3">
-        <div class="col-6">
-          <a href="javascript:void(0)" class="text-light"><small>¿Olvidó su contraseña?</small></a>
-        </div>
+        <small>No tienes cuenta?</small><a routerLink="/register">Regístrate</a>
       </div>
     </div>
   </div>

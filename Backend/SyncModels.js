@@ -12,6 +12,12 @@ const Categoria = require('./src/models/Categoria');
 const Menu = require('./src/models/Menu');
 const Orden = require('./src/models/Orden');
 const OrdenMenu = require('./src/models/OrdenMenu');
+const Pedido = require('./src/models/Pedido');
+const Producto = require('./src/models/Producto');
+const DetallePedido = require('./src/models/DetallePedido');
+const SeccionMenu = require('./src/models/SeccionMenu');
+const DetalleSeccionMenu = require('./src/models/DetalleSeccionMenu');
+
 
 sequelize.sync()
   .then(() => console.log(''))

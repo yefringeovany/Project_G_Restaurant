@@ -1,6 +1,6 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {LoginService} from "./login.service";
-import {Router} from "@angular/router";
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { LoginService } from './login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,23 +11,25 @@ export class LoginComponent implements OnInit, OnDestroy {
   correo_electronico: string;
   contrasenia: string;
 
-  constructor(private authService: LoginService, private router: Router) {
-  }
+  constructor(private authService: LoginService, private router: Router) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
-  ngOnDestroy() {
-  }
-
-  login(correo_electronico: string, contrasenia: string) {
-    this.authService.login(correo_electronico, contrasenia).subscribe(
+  ngOnDestroy() { }
+  login() {
+    this.authService.login(this.correo_electronico, this.contrasenia).subscribe(
       (response) => {
-        localStorage.setItem('token', response.token);
-        this.router.navigate(['/dashboard']).then(r => r.valueOf());
+        if (response.auth) {
+          localStorage.setItem('token', response.token);
+          this.router.navigate(['/dashboard']);
+        } else {
+          console.error('Error en el inicio de sesión:', response.error);
+          // Mostrar mensaje de error al usuario
+        }
       },
       (error) => {
         console.error('Error en el inicio de sesión:', error);
+        // Mostrar mensaje de error al usuario
       }
     );
   }

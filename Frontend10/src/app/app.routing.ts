@@ -1,12 +1,16 @@
-import {NgModule} from '@angular/core';
-import {CommonModule,} from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
-import {Routes, RouterModule} from '@angular/router';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { Routes, RouterModule } from '@angular/router';
 
-import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
-import {AuthLayoutComponent} from './layouts/auth-layout/auth-layout.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+
+import { RegisterComponent } from './components/register/register.component'; // Asegúrate que la ruta sea correcta
 
 const routes: Routes = [
+  { path: 'register', component: RegisterComponent },
+
   {
     path: '',
     redirectTo: 'login',
@@ -43,7 +47,6 @@ const routes: Routes = [
       useHash: true
     })
   ],
-  exports: [],
+  exports: [RouterModule],
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule { }

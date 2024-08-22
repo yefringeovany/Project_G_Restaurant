@@ -1,1 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
+/* Verifica que no haya un fondo blanco aplicado globalmente */
+body {
+  background: none; /* O el color que prefieras */
+}

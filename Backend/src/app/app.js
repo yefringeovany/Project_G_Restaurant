@@ -17,5 +17,10 @@ app.use(require('../controllers/CategoriaController'));
 app.use(require('../controllers/MenuController'));
 app.use(require('../controllers/OrdenController'));
 app.use(require('../controllers/CocinaController'));
+app.use(require('../controllers/PedidoController'));
+app.use(require('../controllers/ProductoController'));
+app.use(require('../controllers/SeccionMenuController'));
+app.use(require('../controllers/DetalleSeccionMenuController'));
+app.use(require('../controllers/DetallePedidoController'));
 
 module.exports = app;

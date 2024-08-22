@@ -1,0 +1,68 @@
+<div class="header pb-4 pt-1 pt-lg-4 d-flex align-items-center" style="min-height: 10px; background-size: cover; background-position: center top;"></div>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <div class="card shadow">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Registro de Usuario</h3>
+
+          <!-- Success Message -->
+          <div *ngIf="usuarioCreado" class="alert alert-success success-message text-center">
+            Usuario creado con éxito!
+          </div>
+
+          <!-- Error Message -->
+          <div *ngIf="error" class="alert alert-danger text-center">
+            {{ error }}
+          </div>
+
+          <form (ngSubmit)="registroUsuarios()" #registerForm="ngForm">
+            <div class="form-group">
+              <label for="nombre">Nombre</label>
+              <input type="text" id="nombre" class="form-control" placeholder="Nombre" [(ngModel)]="nombre" name="nombre" required>
+              <div *ngIf="registerForm.submitted && !nombre" class="invalid-feedback">
+                El nombre es obligatorio.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="apellido">Apellido</label>
+              <input type="text" id="apellido" class="form-control" placeholder="Apellido" [(ngModel)]="apellido" name="apellido" required>
+              <div *ngIf="registerForm.submitted && !apellido" class="invalid-feedback">
+                El apellido es obligatorio.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="correo_electronico">Correo Electrónico</label>
+              <input type="email" id="correo_electronico" class="form-control" placeholder="Correo Electrónico" [(ngModel)]="correo_electronico" name="correo_electronico" required>
+              <div *ngIf="registerForm.submitted && !correo_electronico" class="invalid-feedback">
+                El correo electrónico es obligatorio.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="contrasenia">Contraseña</label>
+              <input type="password" id="contrasenia" class="form-control" placeholder="Contraseña" [(ngModel)]="contrasenia" name="contrasenia" required>
+              <div *ngIf="registerForm.submitted && !contrasenia" class="invalid-feedback">
+                La contraseña es obligatoria.
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="rol">Rol</label>
+              <select id="rol" class="form-control" [(ngModel)]="rol" name="rol" required>
+                <option value="" disabled>Selecciona un rol</option>
+                <option value="SUPER_ADMINISTRADOR">SUPER_ADMINISTRADOR</option>
+                <option value="ADMINISTRADOR">ADMINISTRADOR</option>
+                <option value="CHEF">CHEF</option>
+                <option value="MESERO">MESERO</option>
+              </select>
+              <div *ngIf="registerForm.submitted && !rol" class="invalid-feedback">
+                El rol es obligatorio.
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="!registerForm.form.valid">Crear Usuario</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
