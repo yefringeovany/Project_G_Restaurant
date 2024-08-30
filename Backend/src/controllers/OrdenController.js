@@ -13,6 +13,7 @@ const Orden = require('../models/Orden');
 const OrdenMenu = require('../models/OrdenMenu');
 const verifyToken = require('./VerifyToken');
 
+// Ruta para registrar una nueva orden
 router.post('/orden/register', verifyToken, async (req, res, next) => {
   try {
     const { monto_total, pagado, cambio, estado, menu_items } = req.body;

@@ -10,9 +10,16 @@ function verifyToken(req, res, next) {
     });
   }
 
-  const decoded = jwt.verify(token, config.secret);
-  req.usuarioId = decoded.id;
-  next();
+  jwt.verify(token, config.secret, (err, decoded) => {
+    if (err) {
+      return res.status(403).json({
+        auth: false,
+        message: 'Token inválido'
+      });
+    }
+    req.usuarioId = decoded.id;
+    next();
+  });
 }
 
 module.exports = verifyToken;
