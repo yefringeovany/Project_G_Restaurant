@@ -17,12 +17,17 @@ const verifyToken = require('./VerifyToken');
 router.post('/orden/register', verifyToken, async (req, res, next) => {
   try {
     const { monto_total, pagado, cambio, estado, menu_items } = req.body;
+    const usuario_id = req.usuarioId; // Obtén el ID del usuario desde el token
+    console.log(usuario_id)
+
     const nuevaOrden = await Orden.create({
       monto_total,
       pagado,
       cambio,
-      estado
+      estado,
+      usuario_id  // Asocia la orden con el usuario
     });
+
     if (menu_items && menu_items.length > 0) {
       await Promise.all(menu_items.map(async (item) => {
         await OrdenMenu.create({
@@ -32,6 +37,7 @@ router.post('/orden/register', verifyToken, async (req, res, next) => {
         });
       }));
     }
+
     res.status(201).json(nuevaOrden);
   } catch (error) {
     console.error('Error al registrar nueva orden:', error);

@@ -42,52 +42,44 @@ export class PosComponent implements OnInit {
   }
 
   categoriaSeleccionada(idCategoria: number) {
-    const convertirNumeroIdCategoria = Number(idCategoria);
-    this.categoriaSeleccionadaId = convertirNumeroIdCategoria;
-    this.menuService.listadoMenusPorCategoria(idCategoria).subscribe(
-      (response) => {
-        this.menus = response;
-        if (this.menus.length > 0) {
-          this.menuSeleccionadoId = this.menus[0].id;
-        } else {
-          this.menuSeleccionadoId = null;
-        }
-      },
-      (error) => {
-        console.error('Error al obtener el listado de menus: ', error);
-      }
-    );
-  }
 
-  menuSeleccionado(idMenu: number) {
-    this.menuSeleccionadoId = idMenu;
-  }
+      this.categoriaSeleccionadaId = Number(idCategoria);
+      this.menuService.listadoMenusPorCategoria(this.categoriaSeleccionadaId).subscribe(
+      (response) => {
+      this.menus = response;
+      this.menuSeleccionadoId = null;  // Resetear el menú seleccionado
+      if (this.menus.length > 0) {
+        this.menuSeleccionadoId = this.menus[0].id;  // Asignar el primer menú por defecto
+      }
+      },
+      ( error) => {
+      console.error('Error al obtener el listado de menús: ', error);
+      }
+      );
+      }
+
+  // menuSeleccionado(idMenu: number) {
+  //   this.menuSeleccionadoId = idMenu;
+  // }
 
   agregarALaOrden() {
-    console.log('INICIO LOG ORDEN');
-    console.log('Agregar orden - ID categoria seleccionada:', this.categoriaSeleccionadaId);
-    console.log('Agregar orden - ID menu seleccionado:', this.menuSeleccionadoId);
-    console.log('Agregar orden - Menus cargados:', this.menus);
-    if (!this.categoriaSeleccionadaId) {
-      console.error('No se ha seleccionado una categoría válida.');
-      return;
-    }
-    if (!this.menuSeleccionadoId) {
-      console.error('No se ha seleccionado un menú válido.');
-      return;
-    }
-    const categoriaSeleccionada = this.categorias.find(categoria => categoria.id === this.categoriaSeleccionadaId);
-    const menuSeleccionado = this.menus.find(menu => menu.id === this.menuSeleccionadoId);
-    console.log('Agregar orden - Categoria seleccionada:', categoriaSeleccionada);
-    console.log('Agregar orden - Menu seleccionado:', menuSeleccionado);
-    console.log('FIN LOG ORDEN');
-    if (!categoriaSeleccionada || !menuSeleccionado) {
+    if (!this.categoriaSeleccionadaId || !this.menuSeleccionadoId) {
       console.error('No se ha seleccionado una categoría o menú válido.');
       return;
     }
+
+    const categoriaSeleccionada = this.categorias.find(categoria => categoria.id === this.categoriaSeleccionadaId);
+    const menuSeleccionado = this.menus.find(menu => menu.id === this.menuSeleccionadoId);
+
+    if (!categoriaSeleccionada || !menuSeleccionado) {
+      console.error('No se ha encontrado la categoría o menú en la lista.');
+      return;
+    }
+
     const cantidadIngresada = this.cantidad;
     const precioMenu = menuSeleccionado.precio;
     const montoItem = cantidadIngresada * precioMenu;
+
     this.itemsAgregados.push({
       categoria: categoriaSeleccionada.nombre,
       menu: menuSeleccionado.nombre,
@@ -95,12 +87,19 @@ export class PosComponent implements OnInit {
       monto: montoItem,
       menu_id: menuSeleccionado.id
     });
-    this.montoTotal = this.itemsAgregados.reduce((total, item) => total + item.monto, 0);
-  }
 
-  agregarItem() {
-    this.agregarALaOrden();
+    this.montoTotal = this.itemsAgregados.reduce((total, item) => total + item.monto, 0);
+
+     // Resetear valores para la próxima selección
+    this.menuSeleccionadoId = null;
+    this.cantidad = 1;
   }
+  menuSeleccionado(idMenu: number) {
+    this.menuSeleccionadoId = Number(idMenu);  // Asegurar que el ID es un número
+  }
+   agregarItem() {
+     this.agregarALaOrden();
+   }
 
   calcularCambio() {
     if (this.pagado >= this.montoTotal) {
@@ -111,14 +110,30 @@ export class PosComponent implements OnInit {
   }
 
   crearOrden() {
+
+    // aqui agregue esto
+    if (this.itemsAgregados.length === 0) {
+      console.error('No se han agregado ítems a la orden.');
+      return;
+    }
+
     const menu_items = this.itemsAgregados.map(item => ({
       menu_id: item.menu_id,
       cantidad: item.cantidad
     }));
+
     this.posService.registroOrdenes(this.montoTotal, this.pagado, this.cambio, this.estado, menu_items).subscribe(
       (response) => {
         console.log('Orden registrada exitosamente:', response);
-      },
+       // Limpiar el estado después de registrar la orden
+      this.itemsAgregados = [];
+      this.montoTotal = 0;
+      this.pagado = 0;
+      this.cambio = 0;
+      this.estado = '';
+      this.menuSeleccionadoId = null;
+      this.categoriaSeleccionadaId = null;
+    },
       (error) => {
         console.error('Error al registrar la orden:', error);
       }

@@ -1,5 +1,6 @@
 const database = require('../database/database');
 const { Sequelize, DataTypes } = require('sequelize');
+const Usuario = require('./Usuario'); // Importa el modelo Usuario
 
 const sequelize = new Sequelize(database.DB_NAME, database.DB_USER, database.DB_PASSWORD, {
   host: database.DB_HOST,
@@ -32,6 +33,14 @@ const Orden = sequelize.define('orden', {
   },
   estado: {
     type: DataTypes.ENUM('PENDIENTE', 'ENTREGADO'),
+    allowNull: false
+  },
+   usuario_id: { // Agrega la clave foránea para el usuario
+    type: DataTypes.INTEGER,
+    references: {
+      model: Usuario,
+      key: 'id'
+    },
     allowNull: false
   }
 }, {
