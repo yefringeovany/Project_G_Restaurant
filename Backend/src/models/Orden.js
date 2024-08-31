@@ -47,6 +47,9 @@ const Orden = sequelize.define('orden', {
   freezeTableName: true
 });
 
+// Asociación con el modelo Usuario
+Orden.belongsTo(Usuario, { foreignKey: 'usuario_id', as: 'usuario' });
+
 sequelize.sync()
   .then(() => console.log('Tablas creadas'))
   .catch(error => console.error('Error', error));

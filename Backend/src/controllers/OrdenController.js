@@ -11,6 +11,7 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 
 const Orden = require('../models/Orden');
 const OrdenMenu = require('../models/OrdenMenu');
+const Usuario = require('../models/Usuario'); // Importa el modelo Usuario
 const verifyToken = require('./VerifyToken');
 
 // Ruta para registrar una nueva orden
@@ -75,7 +76,14 @@ router.delete('/orden/delete/:id', verifyToken, async (req, res, next) => {
 
 router.get('/orden/list', verifyToken, async (req, res, next) => {
   try {
-    const ordenes = await Orden.findAll();
+    const ordenes = await Orden.findAll({
+      include: {
+        model: Usuario,
+        as: 'usuario',
+        attributes: ['rol']
+      }
+    });
+    
     res.json(ordenes);
   } catch (error) {
     console.error('Error al obtener la lista de ordenes:', error);
@@ -83,13 +91,26 @@ router.get('/orden/list', verifyToken, async (req, res, next) => {
   }
 });
 
+// Ruta para obtener una orden por ID, incluyendo el usuario y su rol
 router.get('/orden/:id', verifyToken, async (req, res, next) => {
   try {
     const { id } = req.params;
-    const orden = await Orden.findByPk(id);
-    if (!orden) {
-      return res.status(404).send('Orden no encontrada');
-    }
+
+        // Buscar la orden e incluir los datos del usuario relacionado
+        const orden = await Orden.findByPk(id, {
+          include: {
+            model: Usuario,
+            attributes: ['rol'] // Incluye los atributos del usuario que deseas mostrar
+          }
+        });
+
+        if (!orden) {
+          return res.status(404).send('Orden no encontrada');
+        }
+    // const orden = await Orden.findByPk(id, {});
+    // if (!orden) {
+    //   return res.status(404).send('Orden no encontrada');
+    // }
     res.json(orden);
   } catch (error) {
     console.error('Error al obtener orden por ID:', error);
