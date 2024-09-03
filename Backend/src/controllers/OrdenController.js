@@ -3,6 +3,7 @@ const router = Router();
 const Sequelize = require('sequelize');
 const { DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT } = require('../database/database');
 
+
 const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   host: DB_HOST,
   port: DB_PORT,
@@ -13,6 +14,8 @@ const Orden = require('../models/Orden');
 const OrdenMenu = require('../models/OrdenMenu');
 const Usuario = require('../models/Usuario'); // Importa el modelo Usuario
 const verifyToken = require('./VerifyToken');
+const { Op } = require('sequelize');
+
 
 // Ruta para registrar una nueva orden
 router.post('/orden/register', verifyToken, async (req, res, next) => {
@@ -46,6 +49,7 @@ router.post('/orden/register', verifyToken, async (req, res, next) => {
   }
 });
 
+// Ruta para actualizar una orden
 router.put('/orden/update/:id', verifyToken, async (req, res, next) => {
   try {
     const { estado } = req.body;
@@ -62,6 +66,7 @@ router.put('/orden/update/:id', verifyToken, async (req, res, next) => {
   }
 });
 
+// Ruta para eliminar una orden
 router.delete('/orden/delete/:id', verifyToken, async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -74,6 +79,7 @@ router.delete('/orden/delete/:id', verifyToken, async (req, res, next) => {
   }
 });
 
+// Ruta para obtener la lista de órdenes
 router.get('/orden/list', verifyToken, async (req, res, next) => {
   try {
     const ordenes = await Orden.findAll({
@@ -116,6 +122,69 @@ router.get('/orden/:id', verifyToken, async (req, res, next) => {
     console.error('Error al obtener orden por ID:', error);
     res.status(500).send('Error interno del servidor');
   }
+});
+
+// Ruta para obtener la lista de órdenes terminadas
+router.get('/orden/list/finish', verifyToken, async (req, res, next) => {
+  try {
+    const ordenesTerminadas = await Orden.findAll({
+      where: {
+        estado: 'TERMINADO'
+      },
+      include: {
+        model: Usuario,
+        as: 'usuario',
+        attributes: ['rol']
+      }
+    });
+    
+    res.status(200).json(ordenesTerminadas);
+  } catch (error) {
+    console.error('Error al obtener la lista de órdenes terminadas:', error);
+    res.status(500).send('Error al obtener las ordenes terminadas');
+  }
+
+// Ruta para entregar una orden
+  router.post('/orden/entregar/:id', verifyToken, async (req, res) => {
+    try {
+      const ordenId = req.params.id;
+      const orden = await Orden.findByPk(ordenId);
+  
+      if (!orden) {
+        return res.status(404).json({ message: 'Orden no encontrada' });
+      }
+  
+      // Marcar la orden como entregada
+      orden.estado = 'ENTREGADO';
+      await orden.save();
+  
+      res.status(200).json({ message: 'Orden entregada con éxito' });
+    } catch (error) {
+      console.error('Error al entregar la orden:', error);
+      res.status(500).json({ message: 'Error al entregar la orden' });
+    }
+  });
+
+
+ // Nueva ruta para obtener el número total de órdenes entregadas hoy
+router.get('/orden/entregadas-hoy', verifyToken, async (req, res) => {
+  try {
+    const fechaActual = new Date().toISOString().split('T')[0]; // Obtiene la fecha actual en formato YYYY-MM-DD
+
+    const totalOrdenesEntregadasHoy = await Orden.count({
+      where: {
+        estado: 'ENTREGADO',
+        fecha_creacion: fechaActual // 
+      }
+    });
+
+    res.status(200).json({ totalOrdenesEntregadasHoy });
+  } catch (error) {
+    console.error('Error al obtener el total de órdenes entregadas hoy:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+  
 });
 
 module.exports = router;

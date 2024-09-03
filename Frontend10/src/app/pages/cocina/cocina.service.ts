@@ -6,9 +6,7 @@ import { API_BASE_URL } from 'src/api.config';
 @Injectable({
   providedIn: 'root'
 })
-
 export class CocinaService {
-
   constructor(private http: HttpClient) { }
 
   listadoOrdenesPendientes(): Observable<any> {
@@ -17,8 +15,24 @@ export class CocinaService {
       'Content-Type': 'application/json',
       'x-access-token': token
     });
-    return this.http.get(`${API_BASE_URL}/kitchen/list`, {
-      headers
+    return this.http.get(`${API_BASE_URL}/kitchen/list`, { headers });
+  }
+
+  listadoOrdenesTerminadas(): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-access-token': token
     });
+    return this.http.get(`${API_BASE_URL}/kitchen/finished`, { headers });
+  }
+
+  entregarOrden(ordenId: number): Observable<any> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'x-access-token': token
+    });
+    return this.http.post(`${API_BASE_URL}/orden/entregar/${ordenId}`, {}, { headers });
   }
 }

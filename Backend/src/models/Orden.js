@@ -27,12 +27,12 @@ const Orden = sequelize.define('orden', {
     allowNull: false
   },
   fecha_creacion: {
-    type: DataTypes.DATEONLY,
+    type: DataTypes.DATE, //cambiando a date
     defaultValue: DataTypes.NOW,
     allowNull: false
   },
   estado: {
-    type: DataTypes.ENUM('PENDIENTE', 'ENTREGADO'),
+    type: DataTypes.ENUM('PENDIENTE', 'ENTREGADO', 'TERMINADO'),
     allowNull: false
   },
    usuario_id: { // Agrega la clave foránea para el usuario

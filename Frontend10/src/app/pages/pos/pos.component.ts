@@ -19,7 +19,8 @@ export class PosComponent implements OnInit {
   montoTotal: number = 0;
   pagado: number = 0;
   cambio: number = 0;
-  estado: string;
+  estado: string = 'PENDIENTE';
+  ordenCreada: boolean = false; // Propiedad para rastrear si la orden fue creada exitosamente
 
   constructor(
     private categoriaService: CategoriaService,
@@ -122,17 +123,25 @@ export class PosComponent implements OnInit {
       cantidad: item.cantidad
     }));
 
+    // El estado se establece automáticamente como 'PENDIENTE'
     this.posService.registroOrdenes(this.montoTotal, this.pagado, this.cambio, this.estado, menu_items).subscribe(
       (response) => {
         console.log('Orden registrada exitosamente:', response);
+
+      // Mostrar mensaje de éxito
+      this.ordenCreada = true;
+
        // Limpiar el estado después de registrar la orden
       this.itemsAgregados = [];
       this.montoTotal = 0;
       this.pagado = 0;
       this.cambio = 0;
-      this.estado = '';
+      // this.estado = '';
       this.menuSeleccionadoId = null;
       this.categoriaSeleccionadaId = null;
+
+      // Reiniciar el estado a 'PENDIENTE' para la siguiente orden
+      this.estado = 'PENDIENTE';
     },
       (error) => {
         console.error('Error al registrar la orden:', error);
