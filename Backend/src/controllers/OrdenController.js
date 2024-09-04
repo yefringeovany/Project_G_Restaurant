@@ -89,7 +89,7 @@ router.get('/orden/list', verifyToken, async (req, res, next) => {
         attributes: ['rol']
       }
     });
-    
+
     res.json(ordenes);
   } catch (error) {
     console.error('Error al obtener la lista de ordenes:', error);
@@ -103,25 +103,19 @@ router.get('/orden/entregadas-hoy', verifyToken, async (req, res) => {
     const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
     const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
 
-    const ordenes = await Orden.findAll({
+    // Cuenta el número de órdenes entregadas hoy
+    const count = await Orden.count({
       where: {
         fecha_creacion: {
           [Op.between]: [startOfDay, endOfDay]
         },
         estado: 'ENTREGADO'
-      },
-      include: [
-        {
-          model: Usuario,
-          as: 'usuario', // Usa el alias definido en la asociación
-          attributes: ['id', 'nombre'] // Especifica qué atributos quieres incluir
-        }
-      ]
+      }
     });
 
-    res.status(200).json(ordenes);
+    res.status(200).json({ totalordeneshoy: count });
   } catch (error) {
-    console.error('Error al obtener las órdenes:', error);
+    console.error('Error al obtener el conteo de órdenes:', error);
     res.status(500).json({ message: 'Error interno del servidor' });
   }
 });
@@ -131,17 +125,17 @@ router.get('/orden/:id', verifyToken, async (req, res, next) => {
   try {
     const { id } = req.params;
 
-        // Buscar la orden e incluir los datos del usuario relacionado
-        const orden = await Orden.findByPk(id, {
-          include: {
-            model: Usuario,
-            attributes: ['rol'] // Incluye los atributos del usuario que deseas mostrar
-          }
-        });
+    // Buscar la orden e incluir los datos del usuario relacionado
+    const orden = await Orden.findByPk(id, {
+      include: {
+        model: Usuario,
+        attributes: ['rol'] // Incluye los atributos del usuario que deseas mostrar
+      }
+    });
 
-        if (!orden) {
-          return res.status(404).send('Orden no encontrada');
-        }
+    if (!orden) {
+      return res.status(404).send('Orden no encontrada');
+    }
     // const orden = await Orden.findByPk(id, {});
     // if (!orden) {
     //   return res.status(404).send('Orden no encontrada');
@@ -166,27 +160,27 @@ router.get('/orden/list/finish', verifyToken, async (req, res, next) => {
         attributes: ['rol']
       }
     });
-    
+
     res.status(200).json(ordenesTerminadas);
   } catch (error) {
     console.error('Error al obtener la lista de órdenes terminadas:', error);
     res.status(500).send('Error al obtener las ordenes terminadas');
   }
 
-// Ruta para entregar una orden
+  // Ruta para entregar una orden
   router.post('/orden/entregar/:id', verifyToken, async (req, res) => {
     try {
       const ordenId = req.params.id;
       const orden = await Orden.findByPk(ordenId);
-  
+
       if (!orden) {
         return res.status(404).json({ message: 'Orden no encontrada' });
       }
-  
+
       // Marcar la orden como entregada
       orden.estado = 'ENTREGADO';
       await orden.save();
-  
+
       res.status(200).json({ message: 'Orden entregada con éxito' });
     } catch (error) {
       console.error('Error al entregar la orden:', error);
@@ -195,8 +189,8 @@ router.get('/orden/list/finish', verifyToken, async (req, res, next) => {
   });
 
 
- 
-  
+
+
 });
 
 module.exports = router;

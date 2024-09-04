@@ -9,11 +9,14 @@ import { OrdenService } from '../ordenes/orden.service';
 })
 export class DashboardComponent implements OnInit {
   ordenesTerminadas: any[] = [];
+  totalOrdenesHoy: number = 0;
+
 
   constructor(private ordenService: OrdenService) { }
 
   ngOnInit() {
     this.listadoOrdenesTerminadas();
+    this.obtenerTotalOrdenesEntregadasHoy();
   }
 
   listadoOrdenesTerminadas() {
@@ -33,10 +36,22 @@ export class DashboardComponent implements OnInit {
         console.log('Orden entregada con éxito:', response);
         // Remover la orden de la lista después de entregarla
         this.ordenesTerminadas = this.ordenesTerminadas.filter(orden => orden.id !== ordenId);
+        this.obtenerTotalOrdenesEntregadasHoy();  // Actualizar el contador después de entregar una orden
       },
       (error) => {
         console.error('Error al entregar la orden:', error);
       }
     );
   }
+  obtenerTotalOrdenesEntregadasHoy() {
+    this.ordenService.obtenerTotalOrdenesEntregadasHoy().subscribe(
+      (response) => {
+        this.totalOrdenesHoy = response.totalordeneshoy;
+      },
+      (error) => {
+        console.error('Error al obtener el total de órdenes entregadas hoy:', error);
+      }
+    );
+  }
+
 }

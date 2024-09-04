@@ -6,25 +6,43 @@
   <div class="container-fluid d-flex align-items-center">
     <div class="row">
       <div class="col-lg-12 col-md-12">
-        <p class="text-white mt-4 mb-0">Ordenes pendientes</p>
+        <p class="text-white mt-4 mb-0">Órdenes pendientes</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Card de ordenes pendientes -->
+<!-- Card de órdenes pendientes -->
 <div class="row mt-4">
   <div class="col-lg-4 col-md-6 mb-4" *ngFor="let orden of ordenesPendientes">
     <div class="card">
+      <!-- Imagen de ejemplo -->
+      <!-- <img src="../../../assets/img/img_restaurante/ensalada.png" class="card-img-top" alt="Imagen de ejemplo"> -->
       <div class="card-body d-flex flex-column">
         <h5 class="card-title">Estado: {{ orden.estado }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">Menús:</h6>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item" *ngFor="let menu of orden.menus">
-            {{ menu.nombre }} <span class="badge badge-secondary">{{ menu.cantidad }}</span>
+          <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let menu of orden.menus">
+            <span>{{ menu.nombre }}</span>
+            <span class="badge rounded-pill px-3 py-2" style="font-size: 1.25rem; background-color: #ff4d4d; color: white;">
+              {{ menu.cantidad }}
+            </span>
           </li>
         </ul>
-        <button class="btn btn-primary mt-3" (click)="entregarOrden(orden.id)">Entregar</button>
+
+        <div class="card">
+          <div class="card-body">
+            <h6 class="card-subtitle mb-2 text-muted">Descripción:</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let menu of orden.menus">
+                <span>{{ menu.descripcion }}</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <button class="btn mt-3" (click)="entregarOrden(orden.id)" style="background-color: #ff4d4d; color: white;">
+          Entregar
+        </button>
       </div>
     </div>
   </div>

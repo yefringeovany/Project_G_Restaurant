@@ -48,6 +48,10 @@ const Menu = sequelize.define('menu', {
   estado: {
     type: DataTypes.ENUM('ACTIVO', 'INACTIVO'),
     allowNull: false
+  },
+  imagen: { // Nueva columna para la imagen
+    type: DataTypes.STRING(255), // Ajusta el tamaño según tus necesidades
+    allowNull: true
   }
 }, {
   freezeTableName: true

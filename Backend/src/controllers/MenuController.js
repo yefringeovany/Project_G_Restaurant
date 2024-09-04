@@ -3,7 +3,9 @@ const router = Router();
 
 const Menu = require('../models/Menu');
 const verifyToken = require('./VerifyToken');
+const upload = require('./../multer/multerConfig')
 
+// Ruta para registrar un nuevo menú
 router.post('/menu/register', verifyToken, async (req, res, next) => {
   try {
     const { categoria_id, nombre, descripcion, precio, estado } = req.body;
@@ -21,6 +23,7 @@ router.post('/menu/register', verifyToken, async (req, res, next) => {
   }
 });
 
+// Ruta para actualizar un menú
 router.put('/menu/update/:id', verifyToken, async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -43,6 +46,28 @@ router.put('/menu/update/:id', verifyToken, async (req, res, next) => {
   }
 });
 
+// Ruta para actualizar la imagen del menú
+router.put('/menu/update/:id/imagen', verifyToken, upload.single('imagen'), async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const imagenPath = req.file ? req.file.path : null;
+
+    const menu = await Menu.findByPk(id);
+    if (!menu) {
+      return res.status(404).send('Menú no encontrado');
+    }
+
+    menu.imagen = imagenPath;
+    await menu.save();
+
+    res.status(200).json({ message: 'Imagen actualizada con éxito', imagen: imagenPath });
+  } catch (error) {
+    console.error('Error al actualizar imagen del menú:', error);
+    res.status(500).send('Error interno del servidor');
+  }
+});
+
+// Ruta para eliminar un menú
 router.delete('/menu/delete/:id', verifyToken, async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -54,6 +79,7 @@ router.delete('/menu/delete/:id', verifyToken, async (req, res, next) => {
   }
 });
 
+// Ruta para obtener la lista de menús
 router.get('/menu/list', verifyToken, async (req, res, next) => {
   try {
     const menus = await Menu.findAll();
@@ -64,6 +90,7 @@ router.get('/menu/list', verifyToken, async (req, res, next) => {
   }
 });
 
+// Ruta para obtener un menú por ID
 router.get('/menu/:id', verifyToken, async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -78,6 +105,7 @@ router.get('/menu/:id', verifyToken, async (req, res, next) => {
   }
 });
 
+// Ruta para obtener menús por categoría
 router.get('/menu/categoria/:categoria_id', verifyToken, async (req, res, next) => {
   try {
     const { categoria_id } = req.params;

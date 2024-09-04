@@ -1,16 +1,28 @@
-
-<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8 fixed-header">
   <div class="container-fluid">
-    <div class="header-body">
-      <!-- Aquí puedes agregar cualquier contenido específico para el encabezado -->
-      <h2 class="text-white">Panel de Control</h2>
-      <!-- Fin del contenido del encabezado -->
+    <div class="header-body text-center">
+      <h2 class="text-white mb-4">TOTAL DE ORDENES</h2>
+      <div class="card bg-white text-danger mx-auto p-3 shadow-sm elevated-card" style="max-width: 500px;">
+        <div class="d-flex align-items-center justify-content-center flex-wrap">
+          <!-- Ícono SVG de Bootstrap más pequeño y ajustado -->
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-bag-plus" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5"/>
+            <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+          </svg>
+          <h3 class="mb-0 ml-3">
+            <span class="badge badge-danger">{{ totalOrdenesHoy }}</span>
+            <span class="ml-2">Órdenes entregas del día</span>
+          </h3>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
+
+
 <!-- Contenido principal en el body -->
-<div class="container-fluid mt--3">
+<div class="container-fluid mt--0">
   <div class="row mt-4">
     <div class="col-xl-4 col-md-6 mb-4" *ngFor="let orden of ordenesTerminadas">
       <div class="card">

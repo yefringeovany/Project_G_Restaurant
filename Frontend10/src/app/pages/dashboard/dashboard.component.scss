@@ -1,0 +1,49 @@
+.fixed-header {
+  height: 200px; /* Ajusta esta altura según tus necesidades */
+  overflow: hidden;
+  position: relative;
+}
+
+.header-body {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  margin-top: 20px; /* Ajusta según necesites */
+  padding: 1.5rem; /* Ajusta el padding para hacer el cuadro más grande */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card .badge {
+  font-size: 2rem; /* Aumenta el tamaño del número */
+  padding: 0.6rem 1.2rem; /* Ajusta el padding si es necesario */
+}
+
+.card svg {
+  color: #dc3545;
+  width: 32px; /* Tamaño del ícono ajustado */
+  height: 32px; /* Tamaño del ícono ajustado */
+  margin-right: 10px; /* Espacio entre el ícono y el número */
+}
+
+h2 {
+  margin-bottom: 1rem; /* Ajusta el margen inferior del título si es necesario */
+}
+
+h3 {
+  display: flex;
+  align-items: center;
+}
+
+h3 span {
+  margin-left: 1rem; /* Ajusta el margen izquierdo para separar el texto del número */
+}
