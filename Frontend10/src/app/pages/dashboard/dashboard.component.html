@@ -1,29 +1,36 @@
-<!-- dashboard.component.html -->
-<div class="container-fluid">
-  <div class="header-body">
-    <!-- Ordenes Terminadas -->
-    <div class="row mt-4">
-      <div class="col-xl-4 col-md-6 mb-4" *ngFor="let orden of ordenesTerminadas">
-        <div class="card">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title">Orden ID: {{ orden.id }}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">Menús:</h6>
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item" *ngFor="let menu of orden.menus">
-                {{ menu.nombre }} <span class="badge badge-secondary">{{ menu.cantidad }}</span>
-              </li>
-            </ul>
-            <p class="card-text mt-3">Estado: {{ orden.estado }}</p>
-            <p class="card-text">Usuario: {{ orden.usuario.rol }}</p>
 
-            <!-- Botón para entregar orden -->
-            <button class="btn btn-success mt-auto" (click)="entregarOrden(orden.id)">
-              Entregar Orden
-            </button>
-          </div>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Aquí puedes agregar cualquier contenido específico para el encabezado -->
+      <h2 class="text-white">Panel de Control</h2>
+      <!-- Fin del contenido del encabezado -->
+    </div>
+  </div>
+</div>
+
+<!-- Contenido principal en el body -->
+<div class="container-fluid mt--3">
+  <div class="row mt-4">
+    <div class="col-xl-4 col-md-6 mb-4" *ngFor="let orden of ordenesTerminadas">
+      <div class="card">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">Orden ID: {{ orden.id }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">Menús:</h6>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let menu of orden.menus">
+              {{ menu.nombre }} <span class="badge badge-secondary">{{ menu.cantidad }}</span>
+            </li>
+          </ul>
+          <p class="card-text mt-3">Estado: {{ orden.estado }}</p>
+          <p class="card-text">Usuario: {{ orden.usuario.rol }}</p>
+
+          <!-- Botón para entregar orden -->
+          <button class="btn btn-success mt-auto" (click)="entregarOrden(orden.id)">
+            Entregar Orden
+          </button>
         </div>
       </div>
     </div>
-    <!-- Fin de Ordenes Terminadas -->
   </div>
 </div>

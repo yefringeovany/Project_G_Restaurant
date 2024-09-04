@@ -3,6 +3,7 @@ const config = require('../config/config');
 
 function verifyToken(req, res, next) {
   const token = req.headers['x-access-token'];
+  console.log(' Token: ', token )
   if (!token) {
     return res.status(401).json({
       auth: false,

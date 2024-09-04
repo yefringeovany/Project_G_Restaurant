@@ -97,6 +97,35 @@ router.get('/orden/list', verifyToken, async (req, res, next) => {
   }
 });
 
+router.get('/orden/entregadas-hoy', verifyToken, async (req, res) => {
+  try {
+    const today = new Date();
+    const startOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+    const endOfDay = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1);
+
+    const ordenes = await Orden.findAll({
+      where: {
+        fecha_creacion: {
+          [Op.between]: [startOfDay, endOfDay]
+        },
+        estado: 'ENTREGADO'
+      },
+      include: [
+        {
+          model: Usuario,
+          as: 'usuario', // Usa el alias definido en la asociación
+          attributes: ['id', 'nombre'] // Especifica qué atributos quieres incluir
+        }
+      ]
+    });
+
+    res.status(200).json(ordenes);
+  } catch (error) {
+    console.error('Error al obtener las órdenes:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+});
+
 // Ruta para obtener una orden por ID, incluyendo el usuario y su rol
 router.get('/orden/:id', verifyToken, async (req, res, next) => {
   try {
@@ -166,24 +195,7 @@ router.get('/orden/list/finish', verifyToken, async (req, res, next) => {
   });
 
 
- // Nueva ruta para obtener el número total de órdenes entregadas hoy
-router.get('/orden/entregadas-hoy', verifyToken, async (req, res) => {
-  try {
-    const fechaActual = new Date().toISOString().split('T')[0]; // Obtiene la fecha actual en formato YYYY-MM-DD
-
-    const totalOrdenesEntregadasHoy = await Orden.count({
-      where: {
-        estado: 'ENTREGADO',
-        fecha_creacion: fechaActual // 
-      }
-    });
-
-    res.status(200).json({ totalOrdenesEntregadasHoy });
-  } catch (error) {
-    console.error('Error al obtener el total de órdenes entregadas hoy:', error);
-    res.status(500).json({ message: 'Error interno del servidor' });
-  }
-});
+ 
   
 });
 
