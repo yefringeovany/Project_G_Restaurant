@@ -8,12 +8,12 @@ import { CategoriaService } from "../categorias/categoria.service";
   styleUrls: ['./menus.component.scss']
 })
 export class MenusComponent implements OnInit {
-  categoria_id: number;
-  nombre: string;
-  descripcion: string;
-  precio: number;
-  estado: string;
-  imagen: File | null = null; // Campo para la imagen
+  categoria_id: number | null = null;
+  nombre: string = '';
+  descripcion: string = '';
+  precio: number | null = null;
+  estado: string = '';
+  imagen: File | null = null;
   menuCreado: boolean = false;
   menuActualizado: boolean = false;
   menus: any[] = [];
@@ -23,79 +23,73 @@ export class MenusComponent implements OnInit {
   tablaMenus: boolean = true;
   idMenuEditar: number | null = null;
 
-  constructor(private menuService: MenuService, private categoriaService: CategoriaService) {
-  }
+  constructor(private menuService: MenuService, private categoriaService: CategoriaService) { }
 
   ngOnInit(): void {
     this.listadoMenus();
     this.listadoCategorias();
   }
 
-  onFileChange(event: any) {
+  onFileChange(event: any): void {
     if (event.target.files && event.target.files.length > 0) {
       this.imagen = event.target.files[0];
     }
   }
 
-  registroMenus(categoria_id: number, nombre: string, descripcion: string, precio: number, estado: string) {
+  registroMenus(): void {
     if (this.idMenuEditar !== null) {
-      this.actualizarMenu(this.idMenuEditar, categoria_id, nombre, descripcion, precio, estado);
-      this.limpiarCampos();
-      this.ocultarAlerta();
+      this.actualizarMenu(this.idMenuEditar, this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado);
     } else {
-      this.menuService.registroMenus(categoria_id, nombre, descripcion, precio, estado, this.imagen).subscribe(
+      this.menuService.registroMenus(this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado, this.imagen).subscribe(
         () => {
           this.menuCreado = true;
-          this.formularioMenu = true;
-          this.botonCrearNuevoMenu = false;
-          this.tablaMenus = false;
-          this.limpiarCampos();
           this.ocultarAlerta();
         },
         (error) => {
-          console.error('Error en el registro del nuevo menu:', error);
+          console.error('Error en el registro del nuevo menú:', error);
         }
       );
     }
   }
 
-  actualizarMenu(id: number, categoria_id: number, nombre: string, descripcion: string, precio: number, estado: string) {
+  actualizarMenu(id: number, categoria_id: number | null, nombre: string, descripcion: string, precio: number | null, estado: string): void {
     this.menuService.actualizarMenu(id, categoria_id, nombre, descripcion, precio, estado).subscribe(
       () => {
         this.menuActualizado = true;
         this.listadoMenus();
+        this.cancelarEdicion();
       },
       (error) => {
-        console.error('Error al actualizar el menu:', error);
+        console.error('Error al actualizar el menú:', error);
       }
     );
   }
 
-  eliminarMenu(id: number) {
-    if (confirm('¿Estás seguro de que deseas eliminar este menu?')) {
+  eliminarMenu(id: number): void {
+    if (confirm('¿Estás seguro de que deseas eliminar este menú?')) {
       this.menuService.eliminarMenu(id).subscribe(
         () => {
           this.listadoMenus();
         },
         (error) => {
-          console.error('Error al eliminar el menu:', error);
+          console.error('Error al eliminar el menú:', error);
         }
       );
     }
   }
 
-  listadoMenus() {
+  listadoMenus(): void {
     this.menuService.listadoMenus().subscribe(
       (response) => {
         this.menus = response;
       },
       (error) => {
-        console.error('Error al obtener la lista de menus:', error);
+        console.error('Error al obtener la lista de menús:', error);
       }
     );
   }
 
-  listadoCategorias() {
+  listadoCategorias(): void {
     this.categoriaService.listadoCategorias().subscribe(
       (response) => {
         this.categorias = response;
@@ -106,7 +100,7 @@ export class MenusComponent implements OnInit {
     );
   }
 
-  editarMenu(menu: any) {
+  editarMenu(menu: any): void {
     this.idMenuEditar = menu.id;
     this.categoria_id = menu.categoria_id;
     this.nombre = menu.nombre;
@@ -118,16 +112,12 @@ export class MenusComponent implements OnInit {
     this.tablaMenus = false;
   }
 
-  obtenerNombreCategoria(categoria_id: number): string {
-    if (categoria_id != null) {
-      const categoria = this.categorias.find(c => c.id == categoria_id);
-      return categoria ? categoria.nombre : '';
-    } else {
-      return '';
-    }
+  obtenerNombreCategoria(categoria_id: number | null): string {
+    const categoria = this.categorias.find(c => c.id === categoria_id);
+    return categoria ? categoria.nombre : '';
   }
 
-  cancelarEdicion() {
+  cancelarEdicion(): void {
     this.idMenuEditar = null;
     this.limpiarCampos();
     this.formularioMenu = false;
@@ -135,22 +125,19 @@ export class MenusComponent implements OnInit {
     this.tablaMenus = true;
   }
 
-  limpiarCampos() {
+  limpiarCampos(): void {
     this.categoria_id = null;
     this.nombre = '';
     this.descripcion = '';
     this.precio = null;
     this.estado = '';
-    this.imagen = null; // Limpiar la imagen seleccionada
+    this.imagen = null;
   }
 
-  ocultarAlerta() {
+  ocultarAlerta(): void {
     setTimeout(() => {
       this.menuCreado = false;
       this.menuActualizado = false;
-      this.formularioMenu = false;
-      this.botonCrearNuevoMenu = true;
-      this.tablaMenus = true;
       this.listadoMenus();
     }, 5000);
   }

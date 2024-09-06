@@ -29,7 +29,7 @@
           <div class="alert alert-success" *ngIf="menuActualizado && !menuCreado">
             Menú actualizado con éxito!
           </div>
-          <form (ngSubmit)="registroMenus(categoria_id, nombre, descripcion, precio, estado)">
+          <form (ngSubmit)="registroMenus()">
             <div class="form-group">
               <label for="categoria">Categoría</label>
               <select id="categoria" class="form-control" [(ngModel)]="categoria_id" name="categoria_id" required>
@@ -83,8 +83,8 @@
               <th>Descripción</th>
               <th>Precio</th>
               <th>Estado</th>
-              <th>Acciones</th>
               <th>Imagen</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
@@ -93,10 +93,13 @@
               <td>{{ obtenerNombreCategoria(menu.categoria_id) }}</td>
               <td>{{ menu.nombre }}</td>
               <td>{{ menu.descripcion }}</td>
-              <td>{{ menu.precio }}</td>
+              <td>{{ menu.precio | currency:'USD' }}</td>
               <td>{{ menu.estado }}</td>
               <td>
-                <!-- Botones de acciones -->
+                <img *ngIf="menu.imagen" [src]="menu.imagen" alt="{{ menu.nombre }}" style="width: 100px; height: auto;" />
+                <span *ngIf="!menu.imagen">Sin imagen</span>
+              </td>
+              <td>
                 <button class="btn btn-primary btn-sm" (click)="editarMenu(menu)">Editar</button>
                 <button class="btn btn-danger btn-sm" (click)="eliminarMenu(menu.id)">Eliminar</button>
               </td>

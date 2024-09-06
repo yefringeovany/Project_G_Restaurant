@@ -76,9 +76,7 @@ export class MenuService {
       'Content-Type': 'application/json',
       'x-access-token': token
     });
-    return this.http.get(`${API_BASE_URL}/menu/list`, {
-      headers
-    });
+    return this.http.get(`${API_BASE_URL}/menu/list`, { headers });
   }
 
   listadoMenusPorCategoria(categoriId: number): Observable<any> {
