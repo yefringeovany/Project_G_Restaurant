@@ -3,19 +3,23 @@ const router = Router();
 
 const Menu = require('../models/Menu');
 const verifyToken = require('./VerifyToken');
-const upload = require('./../multer/multerConfig')
+const upload = require('../multer/multerConfig')
 
-// Ruta para registrar un nuevo menú
-router.post('/menu/register', verifyToken, async (req, res, next) => {
+// Ruta para registrar un nuevo menú con imagen
+router.post('/menu/register', verifyToken, upload.single('imagen'), async (req, res, next) => {
   try {
     const { categoria_id, nombre, descripcion, precio, estado } = req.body;
+    const imagen = req.file ? req.file.filename : null; // Obtener el nombre del archivo cargado
+
     const nuevoMenu = await Menu.create({
       categoria_id,
       nombre,
       descripcion,
       precio,
-      estado
+      estado,
+      imagen // Guardar el nombre del archivo en la base de datos
     });
+
     res.status(201).json(nuevoMenu);
   } catch (error) {
     console.error('Error al registrar nuevo menú:', error);
@@ -79,10 +83,12 @@ router.delete('/menu/delete/:id', verifyToken, async (req, res, next) => {
   }
 });
 
-// Ruta para obtener la lista de menús
+// Ruta para obtener la lista de menús, incluyendo la imagen
 router.get('/menu/list', verifyToken, async (req, res, next) => {
   try {
-    const menus = await Menu.findAll();
+    const menus = await Menu.findAll({
+      attributes: ['id', 'categoria_id', 'nombre', 'descripcion', 'precio', 'estado', 'imagen']
+    });
     res.json(menus);
   } catch (error) {
     console.error('Error al obtener la lista de menús:', error);

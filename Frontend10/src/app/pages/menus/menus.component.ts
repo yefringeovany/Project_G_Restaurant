@@ -13,6 +13,7 @@ export class MenusComponent implements OnInit {
   descripcion: string;
   precio: number;
   estado: string;
+  imagen: File | null = null; // Campo para la imagen
   menuCreado: boolean = false;
   menuActualizado: boolean = false;
   menus: any[] = [];
@@ -30,13 +31,19 @@ export class MenusComponent implements OnInit {
     this.listadoCategorias();
   }
 
+  onFileChange(event: any) {
+    if (event.target.files && event.target.files.length > 0) {
+      this.imagen = event.target.files[0];
+    }
+  }
+
   registroMenus(categoria_id: number, nombre: string, descripcion: string, precio: number, estado: string) {
     if (this.idMenuEditar !== null) {
       this.actualizarMenu(this.idMenuEditar, categoria_id, nombre, descripcion, precio, estado);
       this.limpiarCampos();
       this.ocultarAlerta();
     } else {
-      this.menuService.registroMenus(categoria_id, nombre, descripcion, precio, estado).subscribe(
+      this.menuService.registroMenus(categoria_id, nombre, descripcion, precio, estado, this.imagen).subscribe(
         () => {
           this.menuCreado = true;
           this.formularioMenu = true;
@@ -134,6 +141,7 @@ export class MenusComponent implements OnInit {
     this.descripcion = '';
     this.precio = null;
     this.estado = '';
+    this.imagen = null; // Limpiar la imagen seleccionada
   }
 
   ocultarAlerta() {
