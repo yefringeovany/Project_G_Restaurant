@@ -20,7 +20,8 @@ router.get('/kitchen/list', verifyToken, async (req, res, next) => {
         o_m.menu_id,
         m.nombre AS menu_nombre,
         o_m.cantidad, 
-        m.descripcion
+        m.descripcion,
+        m.imagen
       FROM orden AS o 
       INNER JOIN orden_menu AS o_m ON o_m.orden_id = o.id
       INNER JOIN menu AS m ON m.id = o_m.menu_id
@@ -35,7 +36,8 @@ router.get('/kitchen/list', verifyToken, async (req, res, next) => {
         menu_id,
         menu_nombre,
         cantidad,
-        descripcion
+        descripcion,
+        imagen
       } = item;
       if (!ordenesConMenus[orden_id]) {
         ordenesConMenus[orden_id] = {
@@ -48,7 +50,8 @@ router.get('/kitchen/list', verifyToken, async (req, res, next) => {
         id: menu_id,
         nombre: menu_nombre,
         cantidad: cantidad,
-        descripcion: descripcion
+        descripcion: descripcion,
+        imagen: imagen
       });
     });
     const ordenesArray = Object.values(ordenesConMenus);

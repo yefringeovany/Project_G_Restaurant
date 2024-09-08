@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CocinaService } from './cocina.service';
 import { OrdenService } from '../ordenes/orden.service';
+import { API_BASE_URL } from 'src/api.config'; // Asegúrate de importar la URL base de la API
 
 @Component({
   selector: 'app-cocina',
@@ -40,5 +41,10 @@ export class CocinaComponent implements OnInit {
         console.error('Error al entregar la orden:', error);
       }
     );
+
+
+  }
+  getImageUrl(imageName: string): string {
+    return `http://localhost:5000/uploads/${imageName}`; // Ajusta esta URL según la ubicación de tus imágenes
   }
 }

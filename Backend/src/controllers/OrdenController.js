@@ -188,9 +188,6 @@ router.get('/orden/list/finish', verifyToken, async (req, res, next) => {
     }
   });
 
-
-
-
 });
 
 module.exports = router;
