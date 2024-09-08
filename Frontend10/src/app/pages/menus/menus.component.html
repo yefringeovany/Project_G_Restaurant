@@ -96,7 +96,7 @@
               <td>{{ menu.precio | currency:'USD' }}</td>
               <td>{{ menu.estado }}</td>
               <td>
-                <img *ngIf="menu.imagen" [src]="menu.imagen" alt="{{ menu.nombre }}" style="width: 100px; height: auto;" />
+                <img *ngIf="menu.imagen" [src]="obtenerUrlImagen(menu.imagen)" alt="{{ menu.nombre }}" style="width: 100px; height: auto;" />
                 <span *ngIf="!menu.imagen">Sin imagen</span>
               </td>
               <td>

@@ -82,6 +82,7 @@ export class MenusComponent implements OnInit {
     this.menuService.listadoMenus().subscribe(
       (response) => {
         this.menus = response;
+        console.log(response)
       },
       (error) => {
         console.error('Error al obtener la lista de menús:', error);
@@ -99,6 +100,15 @@ export class MenusComponent implements OnInit {
       }
     );
   }
+
+  obtenerUrlImagen(imagen: string): string {
+    const baseUrl = 'http://localhost:5000/uploads/';
+
+    // Si la imagen ya tiene la URL completa, simplemente la devuelve.
+    // Si no, concatena el baseUrl con el nombre del archivo.
+    return imagen.startsWith('http') ? imagen : `${baseUrl}${imagen}`;
+  }
+
 
   editarMenu(menu: any): void {
     this.idMenuEditar = menu.id;
