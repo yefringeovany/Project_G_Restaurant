@@ -3,6 +3,8 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {RouterModule} from '@angular/router';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 import {AppComponent} from './app.component';
 import {AdminLayoutComponent} from './layouts/admin-layout/admin-layout.component';
@@ -32,7 +34,8 @@ import { InformacionComponent } from './pages/informacion/informacion.component'
     NgbModule,
     RouterModule,
     AppRoutingModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    MatSnackBarModule
   ],
   declarations: [
     AppComponent,

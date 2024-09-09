@@ -1,5 +1,80 @@
-/* You can add global styles to this file, and also import other style files */
-/* Verifica que no haya un fondo blanco aplicado globalmente */
+/* Estilos globales */
 body {
-  background: none; /* O el color que prefieras */
+  background: #f4f7f6; /* Fondo claro y neutro */
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif; /* Fuente moderna */
+}
+
+/* Estilo global para el snackbar */
+.mat-snackbar-container {
+  border-radius: 12px;
+  padding: 16px 28px;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Sombra más suave y amplia */
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0.95;
+}
+
+/* Estilo para el snackbar de éxito */
+.success-snackbar {
+  background-color: #393a39; /* Verde suave y moderno */
+  color: #ffffff; /* Texto blanco para contraste */
+  align-items: right;
+}
+
+/* Estilo para el snackbar de error */
+.error-snackbar {
+  background-color: #e3342f; /* Rojo brillante para error */
+  color: #ffffff; /* Texto blanco para contraste */
+}
+
+/* Agrega iconos opcionales */
+.snackbar-icon {
+  margin-right: 12px;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos adicionales */
+.snackbar-message {
+  flex: 1;
+}
+
+/* Transiciones para la entrada/salida */
+.mat-snackbar-container {
+  transform: translateY(100%);
+  animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Estilo para el botón "Cerrar" */
+.mat-snackbar-action {
+  font-weight: bold;
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.mat-snackbar-action:hover {
+  color: #f8f9fa; /* Color más claro al hacer hover */
 }

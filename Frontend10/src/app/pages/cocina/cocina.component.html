@@ -29,7 +29,9 @@
               </div>
               <div class="menu-details mt-3">
                 <h6>{{ menu.nombre }}</h6>
-                <p class="mb-1">Cantidad: {{ menu.cantidad }}</p>
+                <p class="mb-1">
+                  Cantidad: <span class="badge badge-danger">{{ menu.cantidad }}</span>
+                </p>
                 <p class="mb-1 text-muted">Descripción: {{ menu.descripcion }}</p>
               </div>
             </li>

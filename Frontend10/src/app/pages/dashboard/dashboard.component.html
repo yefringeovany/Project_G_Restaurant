@@ -11,7 +11,7 @@
           </svg>
           <h3 class="mb-0 ml-3">
             <span class="badge badge-danger">{{ totalOrdenesHoy }}</span>
-            <span class="ml-2">Órdenes entregas del día</span>
+            <span class="ml-2">Órdenes entregadas del día</span>
           </h3>
         </div>
       </div>
@@ -38,7 +38,7 @@
           <p class="card-text">Usuario: {{ orden.usuario.rol }}</p>
 
           <!-- Botón para entregar orden -->
-          <button class="btn btn-success mt-auto" (click)="entregarOrden(orden.id)">
+          <button class="btn mt-3" style="background-color: #ff4d4d; color: white;" (click)="entregarOrden(orden.id)">
             Entregar Orden
           </button>
         </div>

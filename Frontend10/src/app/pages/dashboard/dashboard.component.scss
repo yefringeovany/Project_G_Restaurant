@@ -1,49 +1,78 @@
+// dashboard.component.scss
+
+// Ajustes para el header
 .fixed-header {
-  height: 200px; /* Ajusta esta altura según tus necesidades */
+  height: 200px;
   overflow: hidden;
   position: relative;
-}
 
-.header-body {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  text-align: center;
+  .header-body {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    text-align: center;
+  }
 }
 
 .card {
   background-color: #ffffff;
-  border-radius: 1rem;
-  margin-top: 20px; /* Ajusta según necesites */
-  padding: 1.5rem; /* Ajusta el padding para hacer el cuadro más grande */
+  border-radius: 1rem; /* Ajustado para que sea más redondeado */
+  margin-top: 20px; /* Espacio superior ajustado */
+  padding: 1.25rem; /* Ajuste de padding */
   display: flex;
   align-items: center;
   justify-content: center;
-}
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+  max-width: 100%; /* Tamaño máximo ajustado */
+  height: auto;
 
-.card .badge {
-  font-size: 2rem; /* Aumenta el tamaño del número */
-  padding: 0.6rem 1.2rem; /* Ajusta el padding si es necesario */
-}
+  h5.card-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
 
-.card svg {
-  color: #dc3545;
-  width: 32px; /* Tamaño del ícono ajustado */
-  height: 32px; /* Tamaño del ícono ajustado */
-  margin-right: 10px; /* Espacio entre el ícono y el número */
-}
+  h6.card-subtitle {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
 
-h2 {
-  margin-bottom: 1rem; /* Ajusta el margen inferior del título si es necesario */
-}
+  p.card-text {
+    font-size: 0.9rem;
+  }
 
-h3 {
-  display: flex;
-  align-items: center;
-}
+  /* Ajustes para la lista */
+  .list-group-item {
+    font-size: 0.95rem;
+    padding: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+  }
 
-h3 span {
-  margin-left: 1rem; /* Ajusta el margen izquierdo para separar el texto del número */
+  .badge {
+    font-size: 2rem; /* Aumentar el tamaño del número */
+    padding: 0.6rem 1.2rem; /* Ajustar padding */
+    border-radius: 0.5rem;
+  }
+
+  svg {
+    color: #dc3545;
+    width: 32px; /* Ajustar tamaño del ícono */
+    height: 32px; /* Ajustar tamaño del ícono */
+    margin-right: 10px; /* Espacio entre ícono y número */
+  }
+
+  h2 {
+    margin-bottom: 1rem; /* Ajuste de margen inferior */
+  }
+
+  h3 {
+    display: flex;
+    align-items: center;
+  }
+
+  h3 span {
+    margin-left: 1rem; /* Separar texto del número */
+  }
 }
