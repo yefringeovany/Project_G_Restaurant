@@ -1,3 +1,14 @@
+/* Estilo para el snackbar de éxito */
+.success-snackbar {
+  background-color: #393a39; /* Verde suave */
+  color: #ffffff; /* Texto blanco */
+}
+
+/* Estilo para el snackbar de error */
+.error-snackbar {
+  background-color: #e3342f; /* Rojo para error */
+  color: #ffffff; /* Texto blanco */
+}
 .card {
   background-color: #ffffff;
   border-radius: 1rem; /* Sin borde de color */
