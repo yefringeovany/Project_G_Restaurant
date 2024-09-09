@@ -20,7 +20,7 @@ import { OrdenesComponent } from './pages/ordenes/ordenes.component';
 import { PosComponent } from './pages/pos/pos.component';
 import { CocinaComponent } from './pages/cocina/cocina.component';
 import { InformacionComponent } from './pages/informacion/informacion.component';
-import { ReportesComponent } from './pages/reportes/reportes.component';
+// import { ReportesComponent } from './pages/reportes/reportes.component';
 
 
 @NgModule({
@@ -45,7 +45,7 @@ import { ReportesComponent } from './pages/reportes/reportes.component';
     PosComponent,
     CocinaComponent,
     InformacionComponent,
-    ReportesComponent
+    // ReportesComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

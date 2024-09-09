@@ -52,13 +52,13 @@ export const ROUTES: RouteInfo[] = [
     class: '',
     roles: ['SUPER_ADMINISTRADOR', 'ADMINISTRADOR']
   },
-  {
-    path: '/reportes',
-    title: 'Reportes',
-    icon: 'ni ni-chart-bar-32 text-pink',
-    class: '',
-    roles: ['SUPER_ADMINISTRADOR', 'ADMINISTRADOR']
-  },
+  // {
+  //   path: '/reportes',
+  //   title: 'Reportes',
+  //   icon: 'ni ni-chart-bar-32 text-pink',
+  //   class: '',
+  //   roles: ['SUPER_ADMINISTRADOR', 'ADMINISTRADOR']
+  // },
   {
     path: '/usuarios',
     title: 'Usuarios',

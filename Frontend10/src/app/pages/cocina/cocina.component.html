@@ -12,33 +12,35 @@
   </div>
 </div>
 
-<!-- Card de órdenes pendientes -->
-<div class="row mt-4">
-  <div class="col-lg-4 col-md-6 mb-4" *ngFor="let orden of ordenesPendientes">
-    <div class="card">
-      <!-- Imagen de ejemplo -->
-      <img *ngIf="orden.imagen" [src]="obtenerUrlImagen(orden.imagen)" class="card-img-top" alt="Imagen de la orden" style="height: 200px; object-fit: cover;" />
-      <div class="card-body d-flex flex-column">
-        <h5 class="card-title">Estado: {{ orden.estado }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">Menús:</h6>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item d-flex align-items-center" *ngFor="let menu of orden.menus">
-            <!-- Imagen del menú -->
-            <img *ngIf="menu.imagen" [src]="getImageUrl(menu.imagen)" alt="{{ menu.nombre }}" style="width: 100px; height: auto; margin-right: 10px;" />
-            <span *ngIf="!menu.imagen">Sin imagen</span>
-            <div>
-              <h6>{{ menu.nombre }}</h6>
-              <p class="mb-1">Cantidad: {{ menu.cantidad }}</p>
-              <p class="mb-1 text-muted">Descripción: {{ menu.descripcion }}</p>
-            </div>
-          </li>
-        </ul>
-        <!-- Botón para entregar la orden -->
-        <button class="btn mt-3" (click)="entregarOrden(orden.id)" style="background-color: #ff4d4d; color: white;">
-          Entregar
-        </button>
+<div class="container-fluid mt--0">
+  <div class="row mt-4">
+    <div class="col-xl-4 col-md-6 mb-4" *ngFor="let orden of ordenesPendientes">
+      <div class="card">
+        <div class="card-img-top-container">
+          <img *ngIf="orden.imagen" [src]="obtenerUrlImagen(orden.imagen)" class="card-img-top" alt="Imagen de la orden" />
+        </div>
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-subtitle mb-2 text-muted">Estado: {{ orden.estado }}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Menús:</h6>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let menu of orden.menus">
+              <div class="menu-image-container">
+                <img *ngIf="menu.imagen" [src]="getImageUrl(menu.imagen)" alt="{{ menu.nombre }}" class="menu-img">
+              </div>
+              <div class="menu-details mt-3">
+                <h6>{{ menu.nombre }}</h6>
+                <p class="mb-1">Cantidad: {{ menu.cantidad }}</p>
+                <p class="mb-1 text-muted">Descripción: {{ menu.descripcion }}</p>
+              </div>
+            </li>
+          </ul>
+          <button class="btn mt-3" (click)="entregarOrden(orden.id)" style="background-color: #ff4d4d; color: white;">
+            Entregar
+          </button>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<!-- Fin del card de órdenes pendientes -->
+
+
