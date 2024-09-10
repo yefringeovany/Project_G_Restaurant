@@ -21,7 +21,7 @@ export class UsuariosService {
     });
   }
 
-  actualizarUsuario(id: number, nombre: string, apellido: string, correo_electronico: string, contrasenia: string, rol: string): Observable<any> {
+  actualizarUsuario(id: number, nombre: string, apellido: string, correo_electronico: string, rol: string): Observable<any> { // Eliminamos contrasenia
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -31,7 +31,6 @@ export class UsuariosService {
       nombre,
       apellido,
       correo_electronico,
-      contrasenia,
       rol
     }, {
       headers

@@ -1,8 +1,10 @@
+<!-- Sección del encabezado -->
 <div class="header pb-4 pt-1 pt-lg-4 d-flex align-items-center"
      style="min-height: 10px; background-size: cover; background-position: center top;">
-  <!-- Mask -->
+<!-- Mask -->
+
   <span class="mask bg-gradient-danger opacity-8"></span>
-  <!-- Header container -->
+<!-- Header container -->
   <div class="container-fluid d-flex align-items-center">
     <div class="row">
       <div class="col-lg-12 col-md-12">
@@ -12,46 +14,53 @@
   </div>
 </div>
 
-<!-- Boton para crear un nuevo usuario -->
-<button class="btn btn-warning mt-3 mb-3" *ngIf="botonCrearNuevoUsuario"
-        (click)="formularioUsuario = true; botonCrearNuevoUsuario = false; tablaUsuarios = false">Crear nuevo usuario
-</button>
-
-<!-- Formulario de Usuarios -->
-<div class="container-fluid mt--40" *ngIf="formularioUsuario">
+<!-- Formulario de usuario -->
+<div class="container-fluid mt--20" *ngIf="formularioUsuario">
   <div class="row justify-content-center">
     <div class="col-lg-6">
       <div class="card shadow">
         <div class="card-body">
+          <!-- Mensajes de éxito -->
           <div class="alert alert-success" *ngIf="usuarioCreado && !usuarioActualizado">
-            Usuario creado con éxito!
+            ¡Usuario creado con éxito!
           </div>
           <div class="alert alert-success" *ngIf="usuarioActualizado && !usuarioCreado">
-            Usuario actualizado con éxito!
+            ¡Usuario actualizado con éxito!
           </div>
-          <form (ngSubmit)="registroUsuarios(nombre, apellido, correo_electronico, contrasenia, rol)">
+
+          <!-- Formulario con validaciones -->
+          <form (ngSubmit)="registroUsuarios(nombre, apellido, correo_electronico, contrasenia, rol)" #usuarioForm="ngForm">
             <div class="form-group">
               <label for="nombre">Nombre</label>
               <input type="text" id="nombre" class="form-control" placeholder="Nombre"
-                     [(ngModel)]="nombre" name="nombre">
+                     [(ngModel)]="nombre" name="nombre" required>
+              <div *ngIf="usuarioForm.submitted && !nombre" class="text-danger">El nombre es obligatorio.</div>
             </div>
+
             <div class="form-group">
               <label for="apellido">Apellido</label>
               <input type="text" id="apellido" class="form-control" placeholder="Apellido"
-                     [(ngModel)]="apellido" name="apellido">
+                     [(ngModel)]="apellido" name="apellido" required>
+              <div *ngIf="usuarioForm.submitted && !apellido" class="text-danger">El apellido es obligatorio.</div>
             </div>
+
             <div class="form-group">
               <label for="correo_electronico">Correo Electrónico</label>
               <input type="email" id="correo_electronico" class="form-control" placeholder="Correo Electrónico"
-                     [(ngModel)]="correo_electronico" name="correo_electronico">
+                     [(ngModel)]="correo_electronico" name="correo_electronico" required>
+              <div *ngIf="usuarioForm.submitted && !correo_electronico" class="text-danger">El correo electrónico es obligatorio.</div>
             </div>
-            <div class="form-group">
+
+            <!-- Campo de contraseña solo para nuevo usuario -->
+            <div class="form-group" *ngIf="!idUsuarioEditar">
               <label for="contrasenia">Contraseña</label>
               <input type="password" id="contrasenia" class="form-control" placeholder="Contraseña"
-                     [(ngModel)]="contrasenia" name="contrasenia">
+                     [(ngModel)]="contrasenia" name="contrasenia" required>
+              <div *ngIf="usuarioForm.submitted && !contrasenia" class="text-danger">La contraseña es obligatoria.</div>
             </div>
+
             <div class="form-group">
-              <label for="rol">Estado</label>
+              <label for="rol">Rol</label>
               <select id="rol" class="form-control" [(ngModel)]="rol" name="rol">
                 <option value="SUPER_ADMINISTRADOR">SUPER_ADMINISTRADOR</option>
                 <option value="ADMINISTRADOR">ADMINISTRADOR</option>
@@ -59,10 +68,14 @@
                 <option value="MESERO">MESERO</option>
               </select>
             </div>
-            <button type="submit"
-                    class="btn btn-primary">{{ idUsuarioEditar !== null ? 'Actualizar Usuario' : 'Crear Usuario' }}
-            </button>
-            <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+
+            <!-- Botones para guardar o cancelar -->
+            <div class="form-group d-flex justify-content-between">
+              <button type="submit" class="btn btn-primary">
+                {{ idUsuarioEditar ? 'Actualizar' : 'Registrar' }}
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+            </div>
           </form>
         </div>
       </div>

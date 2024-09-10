@@ -1,7 +1,17 @@
-@import url('https://fonts.googleapis.com/css2?family=Mukta:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mukta:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+// Estilos para el contenedor
+.contenedor-boton {
+  display: flex;
+  justify-content: center; // Centra el botón horizontalmente
+  align-items: center; // Centra el botón verticalmente
+  height: 8vh; // Ocupa toda la altura de la ventana
+}
+
+// Estilos para el botón
 .btn.btn-warning.mt-3.mb-3 {
-  background-color: #9b60d3 !important; // Color de fondo
-  color: #000000 !important; // Color del texto
+  background-color: #ff4d4d !important; // Color de fondo
+  color: #ffffff !important; // Color del texto
   font-family: 'Mukta', sans-serif;
 
   // Cambiar el color del fondo y el texto al pasar el ratón (hover)
@@ -19,8 +29,3 @@
     box-shadow: 0 0 0 0.2rem rgba(114, 86, 35, 0.5);
   }
 }
-
-
-
-
-

@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {UsuariosService} from "./usuarios.service";
+import { Component, OnInit } from '@angular/core';
+import { UsuariosService } from "./usuarios.service";
 
 @Component({
   selector: 'app-usuarios',
@@ -7,50 +7,55 @@ import {UsuariosService} from "./usuarios.service";
   styleUrls: ['./usuarios.component.scss']
 })
 export class UsuariosComponent implements OnInit {
-  nombre: string;
-  apellido: string;
-  correo_electronico: string;
-  contrasenia: string;
-  rol: string;
+  nombre: string = '';
+  apellido: string = '';
+  correo_electronico: string = '';
+  rol: string = '';
   usuarioCreado: boolean = false;
   usuarioActualizado: boolean = false;
-  usuarios: any[];
+  usuarios: any[] = [];
   formularioUsuario: boolean = false;
   botonCrearNuevoUsuario: boolean = true;
   tablaUsuarios: boolean = true;
   idUsuarioEditar: number | null = null;
 
-  constructor(private usuarioService: UsuariosService) {
-  }
+  constructor(private usuarioService: UsuariosService) {}
 
   ngOnInit(): void {
     this.listadoUsuarios();
   }
 
-  registroUsuarios(nombre: string, apellido: string, correo_electronico: string, contrasenia: string, rol: string) {
+  registroUsuarios() {
     if (this.idUsuarioEditar !== null) {
-      this.actualizarUsuario(this.idUsuarioEditar, nombre, apellido, correo_electronico, contrasenia, rol);
+      this.actualizarUsuario();
       this.limpiarCampos();
       this.ocultarAlerta();
     } else {
-      this.usuarioService.registroUsuarios(nombre, apellido, correo_electronico, contrasenia, rol).subscribe(
+      this.usuarioService.registroUsuarios(this.nombre, this.apellido, this.correo_electronico, 'password_placeholder', this.rol).subscribe(
         () => {
           this.usuarioCreado = true;
           this.limpiarCampos();
-          this.ocultarAlerta()
+          this.ocultarAlerta();
         },
         (error) => {
           console.error('Error en el registro del usuario:', error);
         }
-      )
+      );
     }
   }
 
-  actualizarUsuario(id: number, nombre: string, apellido: string, correo_electronico: string, contrasenia: string, rol: string) {
-    this.usuarioService.actualizarUsuario(id, nombre, apellido, correo_electronico, contrasenia, rol).subscribe(
+  actualizarUsuario() {
+    // Validación de campos vacíos antes de la actualización
+    if (!this.nombre.trim() || !this.apellido.trim() || !this.correo_electronico.trim() || !this.rol.trim()) {
+      alert('Por favor, completa todos los campos antes de actualizar.');
+      return;
+    }
+
+    this.usuarioService.actualizarUsuario(this.idUsuarioEditar, this.nombre, this.apellido, this.correo_electronico, this.rol).subscribe(
       () => {
         this.usuarioActualizado = true;
         this.listadoUsuarios();
+        this.limpiarCampos();
       },
       (error) => {
         console.error('Error al actualizar el usuario:', error);
@@ -86,8 +91,8 @@ export class UsuariosComponent implements OnInit {
     this.nombre = '';
     this.apellido = '';
     this.correo_electronico = '';
-    this.contrasenia = '';
     this.rol = '';
+    this.idUsuarioEditar = null;  // Reseteo al finalizar la edición
   }
 
   ocultarAlerta() {
@@ -106,7 +111,6 @@ export class UsuariosComponent implements OnInit {
     this.nombre = usuario.nombre;
     this.apellido = usuario.apellido;
     this.correo_electronico = usuario.correo_electronico;
-    this.contrasenia = usuario.contrasenia;
     this.rol = usuario.rol;
     this.formularioUsuario = true;
     this.botonCrearNuevoUsuario = false;
@@ -114,7 +118,6 @@ export class UsuariosComponent implements OnInit {
   }
 
   cancelarEdicion() {
-    this.idUsuarioEditar = null;
     this.limpiarCampos();
     this.formularioUsuario = false;
     this.botonCrearNuevoUsuario = true;

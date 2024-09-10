@@ -5,6 +5,7 @@ const { Router } = require('express');
 const router = Router();
 const Usuario = require('../models/Usuario');
 const verifyToken = require('./VerifyToken');
+const { Op } = require('sequelize'); // Asegúrate de importar esto
 
 router.post('/user/register', async (req, res, next) => {
   try {
@@ -92,36 +93,46 @@ router.get('/user/profile', verifyToken, async (req, res) => {
 // Ruta para actualizar un usuario
 router.put('/user/update/:id', verifyToken, async (req, res) => {
   try {
-    const { nombre, apellido, correo_electronico, contrasenia, rol } = req.body;
+    const { nombre, apellido, correo_electronico, rol } = req.body;
     const { id } = req.params;
+
+    // Validación básica
+    if (!id || !nombre || !apellido || !correo_electronico || !rol) {
+      return res.status(400).json({ error: 'Faltan datos requeridos' });
+    }
+
+    // Verificar si el usuario existe
     let usuario = await Usuario.findByPk(id);
     if (!usuario) {
       return res.status(404).send('Usuario no encontrado');
     }
-    if (contrasenia) {
-      const salt = await bcrypt.genSalt();
-      const hashedContrasenia = await bcrypt.hash(contrasenia, salt);
-      await usuario.update({
-        nombre,
-        apellido,
-        correo_electronico,
-        contrasenia: hashedContrasenia,
-        rol
-      });
-    } else {
-      await usuario.update({
-        nombre,
-        apellido,
-        correo_electronico,
-        rol
-      });
+
+    // Verificar si el correo electrónico ya está en uso por otro usuario
+    const existingUser = await Usuario.findOne({ 
+      where: { 
+        correo_electronico, 
+        id: { [Op.ne]: id } 
+      } 
+    });
+    if (existingUser) {
+      return res.status(409).json({ error: 'El correo electrónico ya está en uso' });
     }
+
+    // Actualizar usuario
+    usuario.nombre = nombre;
+    usuario.apellido = apellido;
+    usuario.correo_electronico = correo_electronico;
+    usuario.rol = rol;
+
+    await usuario.save(); // Usa save() en lugar de update() para asegurar la actualización
+
     res.status(200).json(usuario);
   } catch (error) {
     console.error('Error al actualizar usuario:', error);
     res.status(500).send('Error interno del servidor');
   }
 });
+
 
 // Ruta para eliminar un usuario
 router.delete('/user/delete/:id', verifyToken, async (req, res) => {
