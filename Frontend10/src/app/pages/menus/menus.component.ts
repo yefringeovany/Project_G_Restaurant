@@ -16,6 +16,7 @@ export class MenusComponent implements OnInit {
   imagen: File | null = null;
   menuCreado: boolean = false;
   menuActualizado: boolean = false;
+  errorAlerta: string = '';
   menus: any[] = [];
   categorias: any[] = [];
   formularioMenu: boolean = false;
@@ -36,9 +37,19 @@ export class MenusComponent implements OnInit {
     }
   }
 
+  validarFormulario(): boolean {
+    if (!this.categoria_id || !this.nombre || !this.precio || !this.estado) {
+      this.errorAlerta = 'Por favor, completa todos los campos requeridos.';
+      return false;
+    }
+    return true;
+  }
+
   registroMenus(): void {
+    if (!this.validarFormulario()) return;
+
     if (this.idMenuEditar !== null) {
-      this.actualizarMenu(this.idMenuEditar, this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado);
+      this.actualizarMenu(this.idMenuEditar, this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado, this.imagen);
     } else {
       this.menuService.registroMenus(this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado, this.imagen).subscribe(
         () => {
@@ -52,12 +63,32 @@ export class MenusComponent implements OnInit {
     }
   }
 
-  actualizarMenu(id: number, categoria_id: number | null, nombre: string, descripcion: string, precio: number | null, estado: string): void {
-    this.menuService.actualizarMenu(id, categoria_id, nombre, descripcion, precio, estado).subscribe(
+  actualizarMenu(id: number, categoria_id: number | null, nombre: string, descripcion: string, precio: number | null, estado: string, imagen: File | null): void {
+    if (!this.validarFormulario()) {
+      this.errorAlerta = 'No se puede actualizar el menú. Asegúrate de completar todos los campos requeridos.';
+      return;
+    }
+
+    this.menuService.actualizarMenu(id, categoria_id || 0, nombre, descripcion || '', precio || 0, estado).subscribe(
       () => {
-        this.menuActualizado = true;
-        this.listadoMenus();
-        this.cancelarEdicion();
+        if (imagen) {
+          this.menuService.actualizarImagenMenu(id, imagen).subscribe(
+            () => {
+              this.menuActualizado = true;
+              this.listadoMenus();
+              this.cancelarEdicion();
+              this.errorAlerta = ''; // Limpiar mensaje de error después de una actualización exitosa
+            },
+            (error) => {
+              console.error('Error al actualizar la imagen del menú:', error);
+            }
+          );
+        } else {
+          this.menuActualizado = true;
+          this.listadoMenus();
+          this.cancelarEdicion();
+          this.errorAlerta = ''; // Limpiar mensaje de error después de una actualización exitosa
+        }
       },
       (error) => {
         console.error('Error al actualizar el menú:', error);
@@ -82,7 +113,7 @@ export class MenusComponent implements OnInit {
     this.menuService.listadoMenus().subscribe(
       (response) => {
         this.menus = response;
-        console.log(response)
+        console.log(response);
       },
       (error) => {
         console.error('Error al obtener la lista de menús:', error);
@@ -103,12 +134,8 @@ export class MenusComponent implements OnInit {
 
   obtenerUrlImagen(imagen: string): string {
     const baseUrl = 'http://localhost:5000/uploads/';
-
-    // Si la imagen ya tiene la URL completa, simplemente la devuelve.
-    // Si no, concatena el baseUrl con el nombre del archivo.
     return imagen.startsWith('http') ? imagen : `${baseUrl}${imagen}`;
   }
-
 
   editarMenu(menu: any): void {
     this.idMenuEditar = menu.id;
@@ -143,12 +170,11 @@ export class MenusComponent implements OnInit {
     this.estado = '';
     this.imagen = null;
   }
-
   ocultarAlerta(): void {
     setTimeout(() => {
       this.menuCreado = false;
       this.menuActualizado = false;
-      this.listadoMenus();
+      this.errorAlerta = '';
     }, 5000);
   }
 }

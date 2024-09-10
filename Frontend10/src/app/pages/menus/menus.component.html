@@ -18,7 +18,7 @@
 </button>
 
 <!-- Formulario de Menús -->
-<div class="container-fluid mt--7" *ngIf="formularioMenu">
+<div class="container-fluid mt-2" *ngIf="formularioMenu">
   <div class="row justify-content-center">
     <div class="col-lg-6">
       <div class="card shadow">
@@ -29,10 +29,14 @@
           <div class="alert alert-success" *ngIf="menuActualizado && !menuCreado">
             Menú actualizado con éxito!
           </div>
+          <div class="alert alert-danger" *ngIf="errorAlerta">
+            {{ errorAlerta }}
+          </div>
           <form (ngSubmit)="registroMenus()">
             <div class="form-group">
               <label for="categoria">Categoría</label>
               <select id="categoria" class="form-control" [(ngModel)]="categoria_id" name="categoria_id" required>
+                <option value="">Selecciona una categoría</option>
                 <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
               </select>
             </div>
@@ -42,7 +46,7 @@
             </div>
             <div class="form-group">
               <label for="descripcion">Descripción</label>
-              <input type="text" id="descripcion" class="form-control" placeholder="Descripción" [(ngModel)]="descripcion" name="descripcion" required />
+              <input type="text" id="descripcion" class="form-control" placeholder="Descripción" [(ngModel)]="descripcion" name="descripcion" />
             </div>
             <div class="form-group">
               <label for="precio">Precio</label>
@@ -56,8 +60,11 @@
               </select>
             </div>
             <div class="form-group">
-              <label for="imagen">Imagen</label>
-              <input type="file" id="imagen" (change)="onFileChange($event)" />
+              <label for="imagen" class="form-label">Imagen</label>
+              <input type="file" id="imagen" (change)="onFileChange($event)" class="form-control-file" />
+              <div *ngIf="imagen">
+                <p>Archivo seleccionado: {{ imagen.name }}</p>
+              </div>
             </div>
             <button type="submit" class="btn btn-primary">{{ idMenuEditar !== null ? 'Actualizar Menú' : 'Crear Menú' }}</button>
             <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
@@ -93,7 +100,7 @@
               <td>{{ obtenerNombreCategoria(menu.categoria_id) }}</td>
               <td>{{ menu.nombre }}</td>
               <td>{{ menu.descripcion }}</td>
-              <td>{{ menu.precio | currency:'USD' }}</td>
+              <td>{{ menu.precio | currency:'Q ' }}</td>
               <td>{{ menu.estado }}</td>
               <td>
                 <img *ngIf="menu.imagen" [src]="obtenerUrlImagen(menu.imagen)" alt="{{ menu.nombre }}" style="width: 100px; height: auto;" />
