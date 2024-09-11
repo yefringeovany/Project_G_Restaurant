@@ -62,9 +62,6 @@
             <div class="form-group">
               <label for="imagen" class="form-label">Imagen</label>
               <input type="file" id="imagen" (change)="onFileChange($event)" class="form-control-file" />
-              <div *ngIf="imagen">
-                <p>Archivo seleccionado: {{ imagen.name }}</p>
-              </div>
             </div>
             <button type="submit" class="btn btn-primary">{{ idMenuEditar !== null ? 'Actualizar Menú' : 'Crear Menú' }}</button>
             <button type="button" class="btn btn-secondary" (click)="cancelarEdicion()">Cancelar</button>

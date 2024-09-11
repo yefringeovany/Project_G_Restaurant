@@ -49,7 +49,7 @@ export class MenusComponent implements OnInit {
     if (!this.validarFormulario()) return;
 
     if (this.idMenuEditar !== null) {
-      this.actualizarMenu(this.idMenuEditar, this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado, this.imagen);
+      this.actualizarMenu(this.idMenuEditar, this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado);
     } else {
       this.menuService.registroMenus(this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado, this.imagen).subscribe(
         () => {
@@ -63,32 +63,18 @@ export class MenusComponent implements OnInit {
     }
   }
 
-  actualizarMenu(id: number, categoria_id: number | null, nombre: string, descripcion: string, precio: number | null, estado: string, imagen: File | null): void {
+  actualizarMenu(id: number, categoria_id: number | null, nombre: string, descripcion: string, precio: number | null, estado: string): void {
     if (!this.validarFormulario()) {
       this.errorAlerta = 'No se puede actualizar el menú. Asegúrate de completar todos los campos requeridos.';
       return;
     }
 
-    this.menuService.actualizarMenu(id, categoria_id || 0, nombre, descripcion || '', precio || 0, estado).subscribe(
+    this.menuService.actualizarMenu(id, categoria_id, nombre, descripcion, precio, estado).subscribe(
       () => {
-        if (imagen) {
-          this.menuService.actualizarImagenMenu(id, imagen).subscribe(
-            () => {
-              this.menuActualizado = true;
-              this.listadoMenus();
-              this.cancelarEdicion();
-              this.errorAlerta = ''; // Limpiar mensaje de error después de una actualización exitosa
-            },
-            (error) => {
-              console.error('Error al actualizar la imagen del menú:', error);
-            }
-          );
-        } else {
-          this.menuActualizado = true;
-          this.listadoMenus();
-          this.cancelarEdicion();
-          this.errorAlerta = ''; // Limpiar mensaje de error después de una actualización exitosa
-        }
+        this.menuActualizado = true;
+        this.listadoMenus();
+        this.cancelarEdicion();
+        this.errorAlerta = ''; // Limpiar mensaje de error después de una actualización exitosa
       },
       (error) => {
         console.error('Error al actualizar el menú:', error);
@@ -113,7 +99,7 @@ export class MenusComponent implements OnInit {
     this.menuService.listadoMenus().subscribe(
       (response) => {
         this.menus = response;
-        console.log(response);
+        console.log(response)
       },
       (error) => {
         console.error('Error al obtener la lista de menús:', error);
@@ -170,6 +156,7 @@ export class MenusComponent implements OnInit {
     this.estado = '';
     this.imagen = null;
   }
+
   ocultarAlerta(): void {
     setTimeout(() => {
       this.menuCreado = false;
