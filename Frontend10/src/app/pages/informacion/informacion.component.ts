@@ -32,7 +32,7 @@ export class InformacionComponent implements OnInit {
       { title: 'Platillos Bajo Pedidos', description: 'Haznos saber que platillos necesitas, nosotros te los preparamos para cualquier ocacion' }
     ],
     socialMedia: {
-      facebook: 'https://www.facebook.com/profile.php?id=100070787351863&sk=about_contact_and_basic_info',
+      facebook: 'https://www.facebook.com/profile.php?id=100070787351863',
       instagram: 'https://www.instagram.com/luna_cafe502/',
       tiktok: 'https://www.tiktok.com/@luna_cafe502?_t=8pdc28kRMLF&_r=1'
     }

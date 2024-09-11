@@ -10,8 +10,6 @@ import { MatButtonModule } from '@angular/material/button'; // Si usas botones
 import { MatListModule } from '@angular/material/list'; // Si usas listas
 
 
-
-
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';

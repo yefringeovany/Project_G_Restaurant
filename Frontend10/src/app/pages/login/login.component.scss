@@ -16,4 +16,14 @@
   a:hover {
     color: #0056b3; // Cambia el color del enlace <a> al pasar el cursor sobre él (hover effect)
   }
+
+  .alerta-exito {
+    background-color: #4caf50;
+    color: white;
+  }
+
+  .alerta-error {
+    background-color: #f44336;
+    color: white;
+  }
 }

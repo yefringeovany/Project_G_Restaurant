@@ -17,27 +17,38 @@
           <div class="text-center text-muted mb-4">
             <small>Inicia sesión con tus credenciales</small>
           </div>
-          <form (ngSubmit)="login()" role="form">
+          <form (ngSubmit)="login()" #loginForm="ngForm" role="form">
+            <!-- Correo Electrónico -->
             <div class="form-group mb-3">
               <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                 </div>
                 <input class="form-control" placeholder="Correo Electrónico" type="email"
-                       [(ngModel)]="correo_electronico" name="correo_electronico" required>
+                       [(ngModel)]="correo_electronico" name="correo_electronico" required #email="ngModel">
+              </div>
+              <!-- Mostrar error si el campo está vacío -->
+              <div *ngIf="email.invalid && email.touched" class="text-danger">
+                El correo electrónico es obligatorio.
               </div>
             </div>
+            <!-- Contraseña -->
             <div class="form-group">
               <div class="input-group input-group-alternative">
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
                 <input class="form-control" placeholder="Contraseña" type="password"
-                       [(ngModel)]="contrasenia" name="contrasenia" required>
+                       [(ngModel)]="contrasenia" name="contrasenia" required #password="ngModel">
+              </div>
+              <!-- Mostrar error si el campo está vacío -->
+              <div *ngIf="password.invalid && password.touched" class="text-danger">
+                La contraseña es obligatoria.
               </div>
             </div>
+            <!-- Botón de Iniciar sesión -->
             <div class="text-center">
-              <button type="submit" class="btn btn-primary my-4">Iniciar sesión</button>
+              <button type="submit" class="btn btn-primary my-4" [disabled]="loginForm.invalid">Iniciar sesión</button>
             </div>
           </form>
         </div>
