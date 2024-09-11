@@ -23,20 +23,18 @@
     <div class="col-lg-6">
       <div class="card shadow">
         <div class="card-body">
+          <!-- Mensaje de éxito al crear menú -->
           <div class="alert alert-success" *ngIf="menuCreado && !menuActualizado">
             Menú creado con éxito!
           </div>
+          <!-- Mensaje de éxito al actualizar menú -->
           <div class="alert alert-success" *ngIf="menuActualizado && !menuCreado">
             Menú actualizado con éxito!
-          </div>
-          <div class="alert alert-danger" *ngIf="errorAlerta">
-            {{ errorAlerta }}
           </div>
           <form (ngSubmit)="registroMenus()">
             <div class="form-group">
               <label for="categoria">Categoría</label>
               <select id="categoria" class="form-control" [(ngModel)]="categoria_id" name="categoria_id" required>
-                <option value="">Selecciona una categoría</option>
                 <option *ngFor="let categoria of categorias" [value]="categoria.id">{{ categoria.nombre }}</option>
               </select>
             </div>
@@ -46,7 +44,7 @@
             </div>
             <div class="form-group">
               <label for="descripcion">Descripción</label>
-              <input type="text" id="descripcion" class="form-control" placeholder="Descripción" [(ngModel)]="descripcion" name="descripcion" />
+              <input type="text" id="descripcion" class="form-control" placeholder="Descripción" [(ngModel)]="descripcion" name="descripcion" required />
             </div>
             <div class="form-group">
               <label for="precio">Precio</label>
@@ -71,6 +69,7 @@
     </div>
   </div>
 </div>
+
 
 <!-- Tabla de Menús -->
 <div class="container-fluid mt-5" *ngIf="tablaMenus">

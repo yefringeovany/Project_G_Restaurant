@@ -16,7 +16,6 @@ export class MenusComponent implements OnInit {
   imagen: File | null = null;
   menuCreado: boolean = false;
   menuActualizado: boolean = false;
-  errorAlerta: string = '';
   menus: any[] = [];
   categorias: any[] = [];
   formularioMenu: boolean = false;
@@ -37,24 +36,14 @@ export class MenusComponent implements OnInit {
     }
   }
 
-  validarFormulario(): boolean {
-    if (!this.categoria_id || !this.nombre || !this.precio || !this.estado) {
-      this.errorAlerta = 'Por favor, completa todos los campos requeridos.';
-      return false;
-    }
-    return true;
-  }
-
   registroMenus(): void {
-    if (!this.validarFormulario()) return;
-
     if (this.idMenuEditar !== null) {
       this.actualizarMenu(this.idMenuEditar, this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado);
     } else {
       this.menuService.registroMenus(this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado, this.imagen).subscribe(
         () => {
           this.menuCreado = true;
-          this.ocultarAlerta();
+          this.ocultarAlerta(); // Asegúrate de que esto se llame correctamente
         },
         (error) => {
           console.error('Error en el registro del nuevo menú:', error);
@@ -64,17 +53,12 @@ export class MenusComponent implements OnInit {
   }
 
   actualizarMenu(id: number, categoria_id: number | null, nombre: string, descripcion: string, precio: number | null, estado: string): void {
-    if (!this.validarFormulario()) {
-      this.errorAlerta = 'No se puede actualizar el menú. Asegúrate de completar todos los campos requeridos.';
-      return;
-    }
-
     this.menuService.actualizarMenu(id, categoria_id, nombre, descripcion, precio, estado).subscribe(
       () => {
-        this.menuActualizado = true;
+        this.menuActualizado = true; // Asegúrate de que esto se establezca en true
         this.listadoMenus();
         this.cancelarEdicion();
-        this.errorAlerta = ''; // Limpiar mensaje de error después de una actualización exitosa
+        this.ocultarAlerta(); // Asegúrate de que esto se llame correctamente
       },
       (error) => {
         console.error('Error al actualizar el menú:', error);
@@ -99,7 +83,6 @@ export class MenusComponent implements OnInit {
     this.menuService.listadoMenus().subscribe(
       (response) => {
         this.menus = response;
-        console.log(response)
       },
       (error) => {
         console.error('Error al obtener la lista de menús:', error);
@@ -161,7 +144,7 @@ export class MenusComponent implements OnInit {
     setTimeout(() => {
       this.menuCreado = false;
       this.menuActualizado = false;
-      this.errorAlerta = '';
+      this.listadoMenus();
     }, 5000);
   }
 }
