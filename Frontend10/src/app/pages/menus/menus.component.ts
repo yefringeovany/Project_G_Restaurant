@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuService } from "./menu.service";
 import { CategoriaService } from "../categorias/categoria.service";
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-menus',
@@ -23,7 +24,11 @@ export class MenusComponent implements OnInit {
   tablaMenus: boolean = true;
   idMenuEditar: number | null = null;
 
-  constructor(private menuService: MenuService, private categoriaService: CategoriaService) { }
+  constructor(
+    private menuService: MenuService,
+    private categoriaService: CategoriaService,
+    private snackBar: MatSnackBar // Inyectar MatSnackBar
+  ) { }
 
   ngOnInit(): void {
     this.listadoMenus();
@@ -42,11 +47,12 @@ export class MenusComponent implements OnInit {
     } else {
       this.menuService.registroMenus(this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado, this.imagen).subscribe(
         () => {
-          this.menuCreado = true;
-          this.ocultarAlerta(); // Asegúrate de que esto se llame correctamente
+          this.showSuccessMessage('Menú creado con éxito!');
+          this.ocultarAlerta();
         },
         (error) => {
           console.error('Error en el registro del nuevo menú:', error);
+          this.showErrorMessage('Error al crear el menú');
         }
       );
     }
@@ -55,17 +61,17 @@ export class MenusComponent implements OnInit {
   actualizarMenu(id: number, categoria_id: number | null, nombre: string, descripcion: string, precio: number | null, estado: string): void {
     this.menuService.actualizarMenu(id, categoria_id, nombre, descripcion, precio, estado).subscribe(
       () => {
-        this.menuActualizado = true; // Asegúrate de que esto se establezca en true
+        this.showSuccessMessage('Menú actualizado con éxito!');
         this.listadoMenus();
         this.cancelarEdicion();
-        this.ocultarAlerta(); // Asegúrate de que esto se llame correctamente
+        this.ocultarAlerta();
       },
       (error) => {
         console.error('Error al actualizar el menú:', error);
+        this.showErrorMessage('Error al actualizar el menú');
       }
     );
   }
-
   eliminarMenu(id: number): void {
     if (confirm('¿Estás seguro de que deseas eliminar este menú?')) {
       this.menuService.eliminarMenu(id).subscribe(
@@ -147,4 +153,21 @@ export class MenusComponent implements OnInit {
       this.listadoMenus();
     }, 5000);
   }
+
+  private showSuccessMessage(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: ['success-snackbar']
+    });
+  }
+
+  private showErrorMessage(message: string) {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 5000,
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar']
+    });
+  }
+
 }

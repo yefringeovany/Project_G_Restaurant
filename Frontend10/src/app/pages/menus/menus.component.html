@@ -13,8 +13,7 @@
 </div>
 
 <!-- Botón para crear un nuevo menú -->
-<button class="btn btn-success mt-3 mb-3" *ngIf="botonCrearNuevoMenu"
-  (click)="formularioMenu = true; botonCrearNuevoMenu = false; tablaMenus = false">Crear nuevo menú
+<button class="btn mt-3"(click)="formularioMenu = true; botonCrearNuevoMenu = false; tablaMenus = false" style="background-color: #ff4d4d; color: white;">Crear nuevo menú
 </button>
 
 <!-- Formulario de Menús -->
@@ -74,7 +73,7 @@
 <!-- Tabla de Menús -->
 <div class="container-fluid mt-5" *ngIf="tablaMenus">
   <div class="row justify-content-center">
-    <div class="col-lg-10">
+    <div class="col-lg-12">
       <h2>Lista de menús</h2>
       <div class="table-responsive">
         <table class="table table-striped">
