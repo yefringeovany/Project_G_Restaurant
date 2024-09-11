@@ -23,6 +23,8 @@ export class MenusComponent implements OnInit {
   botonCrearNuevoMenu: boolean = true;
   tablaMenus: boolean = true;
   idMenuEditar: number | null = null;
+  alertaVisible: boolean = false; // Variable para controlar la visibilidad de la alerta
+
 
   constructor(
     private menuService: MenuService,
@@ -42,12 +44,21 @@ export class MenusComponent implements OnInit {
   }
 
   registroMenus(): void {
+    // Validación de campos
+    if (!this.categoria_id || !this.nombre || !this.descripcion || this.precio === null || !this.estado) {
+      this.alertaVisible = true; // Muestra alerta en caso de error
+      setTimeout(() => this.alertaVisible = false, 5000); // Oculta alerta después de 5 segundos
+      return;
+    }
+
     if (this.idMenuEditar !== null) {
       this.actualizarMenu(this.idMenuEditar, this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado);
     } else {
+      // Crear un nuevo menú
       this.menuService.registroMenus(this.categoria_id, this.nombre, this.descripcion, this.precio, this.estado, this.imagen).subscribe(
         () => {
           this.showSuccessMessage('Menú creado con éxito!');
+          this.limpiarCampos();
           this.ocultarAlerta();
         },
         (error) => {
@@ -150,7 +161,7 @@ export class MenusComponent implements OnInit {
     setTimeout(() => {
       this.menuCreado = false;
       this.menuActualizado = false;
-      this.listadoMenus();
+      this.listadoMenus(); // Opcional: recargar los menús
     }, 5000);
   }
 

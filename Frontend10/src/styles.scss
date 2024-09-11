@@ -27,14 +27,13 @@ body {
 
 /* Estilo para el snackbar de éxito */
 .success-snackbar {
-  background-color: #393a39; /* Verde suave y moderno */
+  background-color: #2b2b2b; /* Verde para éxito */
   color: #ffffff; /* Texto blanco para contraste */
-  align-items: right;
 }
 
 /* Estilo para el snackbar de error */
 .error-snackbar {
-  background-color: #e3342f; /* Rojo brillante para error */
+  background-color: #f44336; /* Rojo para error */
   color: #ffffff; /* Texto blanco para contraste */
 }
 
@@ -77,4 +76,23 @@ body {
 
 .mat-snackbar-action:hover {
   color: #f8f9fa; /* Color más claro al hacer hover */
+}
+
+/* Estilos para alertas en el formulario */
+.alert-warning {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.alert-success {
+  color: #2c2e2c;
+  background-color: #e02316;
+  border-color: #c3e6cb;
+  border-radius: 4px;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
 }

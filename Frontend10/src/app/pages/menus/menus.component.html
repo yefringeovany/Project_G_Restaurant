@@ -22,14 +22,18 @@
     <div class="col-lg-6">
       <div class="card shadow">
         <div class="card-body">
-          <!-- Mensaje de éxito al crear menú -->
-          <div class="alert alert-success" *ngIf="menuCreado && !menuActualizado">
-            Menú creado con éxito!
-          </div>
-          <!-- Mensaje de éxito al actualizar menú -->
-          <div class="alert alert-success" *ngIf="menuActualizado && !menuCreado">
-            Menú actualizado con éxito!
-          </div>
+        <!-- Mensaje de éxito al crear menú -->
+<div class="alert alert-success" *ngIf="menuCreado && !menuActualizado">
+  Menú creado con éxito!
+</div>
+     <!-- Mensaje de éxito al actualizar menú -->
+<div class="alert alert-success" *ngIf="menuActualizado && !menuCreado">
+  Menú actualizado con éxito!
+</div>
+<!-- Mensaje de error -->
+<div class="alert alert-danger" *ngIf="!menuCreado && !menuActualizado && alertaVisible">
+  Por favor, completa todos los campos requeridos.
+</div>
           <form (ngSubmit)="registroMenus()">
             <div class="form-group">
               <label for="categoria">Categoría</label>
