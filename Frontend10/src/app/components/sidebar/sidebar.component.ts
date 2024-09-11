@@ -68,7 +68,7 @@ export const ROUTES: RouteInfo[] = [
   },
   {
     path: '/informacion',
-    title: 'Informacion del sistema',
+    title: 'Informacion',
     icon: 'ni ni-settings text-pink',
     class: '',
     roles: ['SUPER_ADMINISTRADOR', 'ADMINISTRADOR']

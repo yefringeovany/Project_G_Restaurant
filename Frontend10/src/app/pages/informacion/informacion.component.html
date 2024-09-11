@@ -1,8 +1,10 @@
 <!-- Encabezado Principal (arriba) -->
 <div class="header pb-4 pt-1 pt-lg-4 d-flex align-items-center"
      style="min-height: 10px; background-size: cover; background-position: center top;">
+
   <!-- Mask -->
   <span class="mask bg-gradient-danger opacity-8"></span>
+
   <!-- Header container -->
   <div class="container-fluid d-flex align-items-center">
     <div class="row">
@@ -13,19 +15,35 @@
   </div>
 </div>
 
+<!-- Espacio -->
+<br />
+
 <!-- Contenido principal -->
 <main class="container mx-auto px-4 py-8">
+
   <!-- Sobre Nosotros -->
-  <section class="mb-10">
+  <section class="mb-10 section-bg">
     <h2 class="text-2xl font-semibold mb-4">Sobre Nosotros</h2>
     <p class="text-lg">{{ restaurantInfo.description }}</p>
   </section>
 
+  <!-- Espacio -->
+  <br />
+
+  <!-- Historia del Restaurante -->
+  <section class="mb-12 section-bg">
+    <h2 class="text-2xl font-semibold mb-4">Nuestra Historia</h2>
+    <p class="text-lg">{{ restaurantInfo.history }}</p>
+  </section>
+
+  <!-- Espacio -->
+  <br />
+
   <!-- Ubicación -->
-  <section class="mb-12">
+  <section class="mb-12 section-bg">
     <h2 class="text-2xl font-semibold mb-4">Ubicación</h2>
     <div class="bg-amber-100 p-4 rounded-lg shadow-md flex items-center">
-      <mat-icon>location_on</mat-icon>
+      <mat-icon class="icon-large">location_on</mat-icon>
       <div class="ml-2">
         <p *ngFor="let location of restaurantInfo.locations">
           {{ location.address }} - {{ location.phone }}
@@ -36,58 +54,74 @@
       <!-- Mapa de ubicación -->
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3859.878315934878!2d-89.84982072512601!3d14.662846285830952!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8f62130433e900bb%3A0xe6a283eecfdc0c4e!2sLuna%20Cafe!5e0!3m2!1ses!2sgt!4v1726037009405!5m2!1ses!2sgt"
-        width="100%"
-        height="100%"
-        style="border:0;"
-        allowfullscreen=""
-        loading="lazy"
+        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
     </div>
   </section>
 
+  <!-- Espacio -->
+  <br />
+
   <!-- Contacto -->
-  <section class="mb-12">
+  <section class="mb-12 section-bg">
     <h2 class="text-2xl font-semibold mb-4">Contacto</h2>
     <div class="space-y-2">
       <div class="flex items-center">
-        <mat-icon>phone</mat-icon>
+        <mat-icon class="icon-large">phone</mat-icon>
         <p class="ml-2">{{ restaurantInfo.locations[0].phone }}</p>
       </div>
-      <!-- Añade más detalles de contacto si es necesario -->
     </div>
   </section>
 
-  <!-- Promociones -->
-  <section class="mb-12">
-    <h2 class="text-2xl font-semibold mb-4">Promociones</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div class="bg-amber-100 p-4 rounded-lg shadow-md" *ngFor="let promo of restaurantInfo.promotions">
-        <h3 class="text-xl font-semibold mb-2">{{ promo.title }}</h3>
-        <p>{{ promo.description }}</p>
+  <!-- Espacio -->
+  <br />
+
+  <!-- Testimonios -->
+  <section class="mb-12 section-bg">
+    <h2 class="text-2xl font-semibold mb-4">Testimonios</h2>
+    <div class="bg-amber-100 p-4 rounded-lg shadow-md">
+      <div *ngFor="let testimonial of restaurantInfo.testimonials" class="mb-4">
+        <blockquote>
+          <p>"{{ testimonial.comment }}"</p>
+          <footer>- {{ testimonial.customer }}</footer>
+        </blockquote>
       </div>
     </div>
   </section>
+
+
+  <!-- Espacio -->
+  <br />
+
+  <!-- Eventos Especiales -->
+  <section class="mb-12 section-bg">
+    <h2 class="text-2xl font-semibold mb-4">Reservaciones</h2>
+    <div class="bg-amber-100 p-4 rounded-lg shadow-md">
+      <div *ngFor="let event of restaurantInfo.events" class="mb-4">
+        <h3 class="text-xl font-semibold mb-2">{{ event.title }}</h3>
+        <p>{{ event.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Espacio -->
+  <br />
+
+<!-- Redes Sociales -->
+<section class="mb-12 section-bg">
+  <h2 class="text-2xl font-semibold mb-4 text-center">Síguenos</h2>
+  <div class="social-icons-container bg-amber-100 p-6 rounded-lg shadow-md">
+    <a [href]="restaurantInfo.socialMedia.facebook" target="_blank" class="text-gray-800 hover:text-amber-600">
+      <mat-icon class="icon-large">facebook</mat-icon>
+    </a>
+    <a [href]="restaurantInfo.socialMedia.instagram" target="_blank" class="text-gray-800 hover:text-amber-600">
+      <mat-icon class="icon-large">instagram</mat-icon>
+    </a>
+    <a [href]="restaurantInfo.socialMedia.tiktok" target="_blank" class="text-gray-800 hover:text-amber-600">
+      <mat-icon class="icon-large">tiktok</mat-icon>
+    </a>
+  </div>
+</section>
+
 </main>
-
-
-    <!-- Sección de Redes Sociales -->
-    <div class="flex items-center space-x-4">
-      <h2 class="text-xl font-semibold mb-0 mr-4">Síguenos</h2>
-      <a [href]="'http://' + restaurantInfo.socialMedia.facebook" target="_blank" class="text-white hover:text-amber-300">
-        <mat-icon>facebook</mat-icon>
-      </a>
-      <a [href]="'http://' + restaurantInfo.socialMedia.instagram" target="_blank" class="text-white hover:text-amber-300">
-        <mat-icon>instagram</mat-icon>
-      </a>
-      <a [href]="'http://' + restaurantInfo.socialMedia.twitter" target="_blank" class="text-white hover:text-amber-300">
-        <mat-icon>twitter</mat-icon>
-      </a>
-    </div>
-
-    <!-- Sección de Website -->
-    <div class="flex items-center mt-4 md:mt-0">
-      <mat-icon>language</mat-icon>
-      <a [href]="'http://' + restaurantInfo.website" target="_blank" class="ml-2 text-white hover:underline">{{ restaurantInfo.website }}</a>
-    </div>
-

@@ -1,31 +1,52 @@
+// Color de fondo de las secciones
+.section-bg {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+}
+
+// Estilos de encabezado
 .header {
-  background: #ff8c00; // Cambia según tu paleta de colores
+  background: #e43841;
 }
 
 mat-icon {
-  color: #ff8c00; // Cambia según tu paleta de colores
+  color: #ffffff;
 }
 
-footer a {
-  color: #ff8c00; // Cambia según tu paleta de colores
+// Estilo de íconos grandes
+.icon-large {
+  font-size: 1.6rem; // Ajusta el tamaño según lo necesites
+  color: #000000; /* Ajusta el color para que sea visible */
+  line-height: 1; // Ajusta la altura de línea para centrar los íconos
 }
 
-footer a:hover {
-  color: #ffb84d; // Cambia según tu paleta de colores
+// Ajustes para la sección de redes sociales
+.social-icons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem; // Espacio entre íconos
+  padding: 1.5rem; // Aumenta el padding si es necesario
+  background-color: #d0cfcf; // Asegúrate de que el color sea el deseado
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Añade sombra si es necesario
 }
 
-.bg-amber-100 {
-  background-color: #fff3e0; // Cambia según tu paleta de colores
+.social-icons-container a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+blockquote {
+  border-left: 2px solid #cccccc;
+  padding-left: 1rem;
+  margin: 0;
+  font-style: italic;
 }
 
-.bg-amber-800 {
-  background-color: #ff5722; // Cambia según tu paleta de colores
-}
-
-.text-amber-50 {
-  color: #fff3e0; // Cambia según tu paleta de colores
-}
-
-.text-amber-900 {
-  color: #3e2723; // Cambia según tu paleta de colores
+blockquote footer {
+  text-align: right;
+  font-weight: bold;
+  color: #666666;
 }
