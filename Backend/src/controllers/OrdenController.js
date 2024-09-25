@@ -22,7 +22,9 @@ router.post('/orden/register', verifyToken, async (req, res, next) => {
   try {
     const { monto_total, pagado, cambio, estado, menu_items } = req.body;
     const usuario_id = req.usuarioId; // Obtén el ID del usuario desde el token
-    console.log(usuario_id)
+    console.log('Datos recibidos:', { monto_total, pagado, cambio, estado, usuario_id });
+
+    // console.log(usuario_id)
 
     const nuevaOrden = await Orden.create({
       monto_total,
@@ -31,6 +33,7 @@ router.post('/orden/register', verifyToken, async (req, res, next) => {
       estado,
       usuario_id  // Asocia la orden con el usuario
     });
+    console.log('Orden creada:', nuevaOrden);
 
     if (menu_items && menu_items.length > 0) {
       await Promise.all(menu_items.map(async (item) => {
@@ -44,7 +47,7 @@ router.post('/orden/register', verifyToken, async (req, res, next) => {
 
     res.status(201).json(nuevaOrden);
   } catch (error) {
-    console.error('Error al registrar nueva orden:', error);
+    console.error('Error al registrar nueva orden:', error);  // para prrueba de testing me error en esta linea (cuando comento la inea se quita el error)
     res.status(500).send('Error interno del servidor');
   }
 });
@@ -61,7 +64,7 @@ router.put('/orden/update/:id', verifyToken, async (req, res, next) => {
     await ordenActualizada.update({ estado });
     res.json(ordenActualizada);
   } catch (error) {
-    console.error('Error al actualizar la orden:', error);
+    console.error('Error al actualizar la orden:', error);  // para prueba de testing me error en esta linea (cuando comento la inea se quita el error)
     res.status(500).send('Error interno del servidor');
   }
 });
@@ -74,7 +77,7 @@ router.delete('/orden/delete/:id', verifyToken, async (req, res, next) => {
     await OrdenMenu.destroy({ where: { orden_id: id } });
     res.status(200).json(ordenEliminada);
   } catch (error) {
-    console.error('Error al eliminar orden:', error);
+    console.error('Error al eliminar orden:', error); // para prueba de testing me error en esta linea (cuando comento la inea se quita el error)
     res.status(500).send('Error interno del servidor');
   }
 });
