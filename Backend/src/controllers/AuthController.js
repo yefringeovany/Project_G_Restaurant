@@ -7,9 +7,12 @@ const Usuario = require('../models/Usuario');
 const verifyToken = require('./VerifyToken');
 const { Op } = require('sequelize'); // Asegúrate de importar esto
 
+// Ruta POST para registrar un nuevo usuario
 router.post('/user/register', async (req, res, next) => {
   try {
+    // Desestructuración de los datos del cuerpo de la solicitud (req.body)
     const { nombre, apellido, correo_electronico, contrasenia, rol } = req.body;
+    // Creación de una nueva instancia del modelo Usuario con los datos recibidos
     const usuario = new Usuario({
       nombre: nombre,
       apellido: apellido,
@@ -18,43 +21,54 @@ router.post('/user/register', async (req, res, next) => {
       rol: rol
     });
 
+    // Guardado del nuevo usuario en la base de datos
     await usuario.save();
 
+    // Generación de un token JWT (JSON Web Token) para el usuario recién creado
     const token = jwt.sign({
       id: usuario.id,
       rol: usuario.rol,
       nombre: usuario.nombre,
       apellido: usuario.apellido
     }, config.secret, {
+    // El token expira en 24 horas (60 * 60 * 24 segundos)
       expiresIn: 60 * 60 * 24
     });
 
+    // Respuesta exitosa con el token generado
     res.json({
       auth: true,
       token: token
     });
   } catch (error) {
+    // Manejo de errores: si algo falla en el proceso de registro, captura el error
     console.error('Error al registrar usuario:', error);
+    // Responde al cliente con un estado 500 (Error interno del servidor)
     res.status(500).send('Error interno del servidor');
   }
 });
 
-// Ruta para iniciar sesión
+// Ruta POST para el inicio de sesión de un usuario
 router.post('/user/login', async (req, res) => {
   try {
+    // Extraer los datos de correo electrónico y contraseña del cuerpo de la solicitud
     const { correo_electronico, contrasenia } = req.body;
-    console.log('Datos recibidos:', req.body); // Verificar datos
+    console.log('Datos recibidos:', req.body); // Para verificar que los datos se están recibiendo correctamente
 
+    // Buscar un usuario en la base de datos por su correo electrónico
     const usuario = await Usuario.findOne({ where: { correo_electronico } });
+    // Si el usuario no existe, enviar una respuesta de error 404
     if (!usuario) {
       return res.status(404).json({ error: 'Usuario no encontrado' });
     }
 
-    console.log('Contraseña almacenada:', usuario.contrasenia); // Verificar contraseña almacenada
+    console.log('Contraseña almacenada:', usuario.contrasenia); // // Verificar la contraseña almacenada en la base de datos
 
-    // Verificar la contraseña
+     // Comparar la contraseña proporcionada con la almacenada
     const contraseniaValida = await bcrypt.compare(contrasenia, usuario.contrasenia);
-    console.log('¿Contraseña válida?', contraseniaValida); // Verificar comparación
+    console.log('¿Contraseña válida?', contraseniaValida); // Mostrar el resultado de la comparación de contraseñas
+    
+     // Si la contraseña no coincide, devolver un error 401 (no autorizado)
     if (!contraseniaValida) {
       return res.status(401).json({ auth: false, token: null, error: 'Contraseña incorrecta' });
     }

@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +24,7 @@
     "sequelize": "^6.37.1"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.0"
   }

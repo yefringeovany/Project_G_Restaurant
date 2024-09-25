@@ -11,8 +11,10 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
 
 const verifyToken = require('./VerifyToken');
 
+// Ruta GET para obtener la lista de órdenes pendientes en la cocina
 router.get('/kitchen/list', verifyToken, async (req, res, next) => {
   try {
+    // Ejecutar una consulta SQL para obtener las órdenes pendientes junto con los detalles de los menús asociados
     const ordenes = await sequelize.query(`
       SELECT 
         o.id AS orden_id,
@@ -27,7 +29,9 @@ router.get('/kitchen/list', verifyToken, async (req, res, next) => {
       INNER JOIN menu AS m ON m.id = o_m.menu_id
       WHERE o.estado = 'PENDIENTE'
       ORDER BY o.id;
-    `, { type: Sequelize.QueryTypes.SELECT });
+    `, { type: Sequelize.QueryTypes.SELECT });// Especificar el tipo de consulta como SELECT
+
+    // Crear un objeto para agrupar las órdenes por su ID
     const ordenesConMenus = {};
     ordenes.forEach((item) => {
       const {
@@ -39,6 +43,7 @@ router.get('/kitchen/list', verifyToken, async (req, res, next) => {
         descripcion,
         imagen
       } = item;
+      // Si la orden aún no está en el objeto, inicializarla
       if (!ordenesConMenus[orden_id]) {
         ordenesConMenus[orden_id] = {
           id: orden_id,
