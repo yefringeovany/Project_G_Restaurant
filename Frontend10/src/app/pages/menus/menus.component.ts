@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MenuService } from "./menu.service";
 import { CategoriaService } from "../categorias/categoria.service";
 import { MatSnackBar } from '@angular/material/snack-bar';
-
+import { API_BASE_URL} from "../../../api.config"
 @Component({
   selector: 'app-menus',
   templateUrl: './menus.component.html',
@@ -119,7 +119,7 @@ export class MenusComponent implements OnInit {
   }
 
   obtenerUrlImagen(imagen: string): string {
-    const baseUrl = 'http://localhost:5000/uploads/';
+    const baseUrl = `${API_BASE_URL}/uploads/`;   // Usa la variable API_BASE_URL para construir la URL base
     return imagen.startsWith('http') ? imagen : `${baseUrl}${imagen}`;
   }
 

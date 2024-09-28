@@ -64,6 +64,6 @@ export class CocinaComponent implements OnInit {
   }
 
   getImageUrl(imageName: string): string {
-    return `http://localhost:5000/uploads/${imageName}`; // Ajusta esta URL según la ubicación de tus imágenes
+    return `${API_BASE_URL}/uploads/${imageName}`; // Ajusta esta URL según la ubicación de tus imágenes
   }
 }
