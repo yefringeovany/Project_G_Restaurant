@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { API_BASE_URL } from 'src/api.config';
 
 @Component({
   selector: 'app-register',
@@ -32,7 +33,7 @@ export class RegisterComponent {
       rol: this.rol
     };
 
-    const url = 'http://localhost:5000/user/register';
+    const url = `${API_BASE_URL}/user/register`;
 
     this.http.post(url, usuario).subscribe(
       response => {
