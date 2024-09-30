@@ -1,12 +1,19 @@
-const database = require('../database/database');
+// const database = require('../database/database');
+require('dotenv').config(); // Cargar variables de entorno
 const { Sequelize, DataTypes } = require('sequelize');
 const Usuario = require('./Usuario'); // Importa el modelo Usuario
 
-const sequelize = new Sequelize(database.DB_NAME, database.DB_USER, database.DB_PASSWORD, {
-  host: database.DB_HOST,
-  port: database.DB_PORT,
-  dialect: 'mysql'
-});
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    dialect: 'mysql',
+  }
+);
+
 
 const Orden = sequelize.define('orden', {
   id: {
