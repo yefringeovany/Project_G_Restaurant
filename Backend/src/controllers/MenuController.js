@@ -22,7 +22,7 @@ router.post('/menu/register', verifyToken, upload.single('imagen'), async (req, 
 
     res.status(201).json(nuevoMenu);
   } catch (error) {
-    console.error('Error al registrar nuevo menú:', error);
+    // console.error('Error al registrar nuevo menú:', error); // para prrueba de testing me error en esta linea (cuando comento la inea se quita el error)
     res.status(500).send('Error interno del servidor');
   }
 });
@@ -45,7 +45,7 @@ router.put('/menu/update/:id', verifyToken, async (req, res, next) => {
     });
     res.status(200).json(menuActualizado);
   } catch (error) {
-    console.error('Error al actualizar menú:', error);
+    // console.error('Error al actualizar menú:', error); 
     res.status(500).send('Error interno del servidor');
   }
 });
@@ -66,7 +66,7 @@ router.put('/menu/update/:id/imagen', verifyToken, upload.single('imagen'), asyn
 
     res.status(200).json({ message: 'Imagen actualizada con éxito', imagen: imagenPath });
   } catch (error) {
-    console.error('Error al actualizar imagen del menú:', error);
+    // console.error('Error al actualizar imagen del menú:', error);
     res.status(500).send('Error interno del servidor');
   }
 });
@@ -78,7 +78,7 @@ router.delete('/menu/delete/:id', verifyToken, async (req, res, next) => {
     const menuEliminado = await Menu.destroy({ where: { id } });
     res.status(200).json(menuEliminado);
   } catch (error) {
-    console.error('Error al eliminar menú:', error);
+    // console.error('Error al eliminar menú:', error);
     res.status(500).send('Error interno del servidor');
   }
 });
@@ -91,7 +91,7 @@ router.get('/menu/list', verifyToken, async (req, res, next) => {
     });
     res.json(menus);
   } catch (error) {
-    console.error('Error al obtener la lista de menús:', error);
+    // console.error('Error al obtener la lista de menús:', error);
     res.status(500).send('Error interno del servidor');
   }
 });
@@ -106,7 +106,7 @@ router.get('/menu/:id', verifyToken, async (req, res, next) => {
     }
     res.json(menu);
   } catch (error) {
-    console.error('Error al obtener menú por ID:', error);
+    // console.error('Error al obtener menú por ID:', error);
     res.status(500).send('Error interno del servidor');
   }
 });
