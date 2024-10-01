@@ -1,4 +1,3 @@
-// tests/CategoriaController.test.js
 
 const request = require('supertest');
 const express = require('express');
