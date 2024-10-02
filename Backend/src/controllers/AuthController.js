@@ -42,7 +42,7 @@ router.post('/user/register', async (req, res, next) => {
     });
   } catch (error) {
     // Manejo de errores: si algo falla en el proceso de registro, captura el error
-    console.error('Error al registrar usuario:', error);
+    // console.error('Error al registrar usuario:', error);
     // Responde al cliente con un estado 500 (Error interno del servidor)
     res.status(500).send('Error interno del servidor');
   }
@@ -53,7 +53,7 @@ router.post('/user/login', async (req, res) => {
   try {
     // Extraer los datos de correo electrónico y contraseña del cuerpo de la solicitud
     const { correo_electronico, contrasenia } = req.body;
-    console.log('Datos recibidos:', req.body); // Para verificar que los datos se están recibiendo correctamente
+    // console.log('Datos recibidos:', req.body); // Para verificar que los datos se están recibiendo correctamente
 
     // Buscar un usuario en la base de datos por su correo electrónico
     const usuario = await Usuario.findOne({ where: { correo_electronico } });

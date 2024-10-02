@@ -9,7 +9,7 @@ const upload = require('../multer/multerConfig')
 router.post('/menu/register', verifyToken, upload.single('imagen'), async (req, res, next) => {
   try {
     const { categoria_id, nombre, descripcion, precio, estado } = req.body;
-    const imagen = req.file ? req.file.filename : null; // Obtener el nombre del archivo cargado
+    const imagen = req.file ? req.file.path : null; // La URL de la imagen en Cloudinary
 
     const nuevoMenu = await Menu.create({
       categoria_id,
@@ -17,7 +17,7 @@ router.post('/menu/register', verifyToken, upload.single('imagen'), async (req, 
       descripcion,
       precio,
       estado,
-      imagen // Guardar el nombre del archivo en la base de datos
+      imagen, // Guardar la URL de la imagen en la base de datos
     });
 
     res.status(201).json(nuevoMenu);
@@ -54,7 +54,7 @@ router.put('/menu/update/:id', verifyToken, async (req, res, next) => {
 router.put('/menu/update/:id/imagen', verifyToken, upload.single('imagen'), async (req, res, next) => {
   try {
     const { id } = req.params;
-    const imagenPath = req.file ? req.file.path : null;
+    const imagenPath = req.file ? req.file.path : null; // URL de Cloudinary
 
     const menu = await Menu.findByPk(id);
     if (!menu) {
@@ -66,7 +66,6 @@ router.put('/menu/update/:id/imagen', verifyToken, upload.single('imagen'), asyn
 
     res.status(200).json({ message: 'Imagen actualizada con éxito', imagen: imagenPath });
   } catch (error) {
-    // console.error('Error al actualizar imagen del menú:', error);
     res.status(500).send('Error interno del servidor');
   }
 });
