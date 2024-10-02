@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 
-const Categoria = require('../models/Categoria');
+const Categoria = require('../models/categoria');
 const verifyToken = require('./VerifyToken');
 
 // Ruta POST para registrar una nueva categoría
