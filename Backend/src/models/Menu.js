@@ -12,7 +12,7 @@ const sequelize = new Sequelize(
     dialect: 'mysql',
   }
 );
-const Categoria = require('./Categoria');
+const Categoria = require('./categoria');
 
 sequelize.authenticate()
   .then(() => console.log('Conexión establecida con la base de datos.'))
