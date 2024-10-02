@@ -63,7 +63,7 @@ export class CocinaComponent implements OnInit {
     });
   }
 
-  getImageUrl(imageName: string): string {
-    return `${API_BASE_URL}/uploads/${imageName}`; // Ajusta esta URL según la ubicación de tus imágenes
+  getImageUrl(imageUrl: string): string {
+    return imageUrl; // Devuelve la URL completa desde Cloudinary
   }
 }

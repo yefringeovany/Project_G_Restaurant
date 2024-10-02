@@ -17,7 +17,7 @@
     <div class="col-xl-4 col-md-6 mb-4" *ngFor="let orden of ordenesPendientes">
       <div class="card">
         <div class="card-img-top-container">
-          <img *ngIf="orden.imagen" [src]="obtenerUrlImagen(orden.imagen)" class="card-img-top" alt="Imagen de la orden" />
+          <img *ngIf="orden.imagen" [src]="getImageUrl(orden.imagen)" class="card-img-top" alt="Imagen de la orden" />
         </div>
         <div class="card-body d-flex flex-column">
           <h6 class="card-subtitle mb-2 text-muted">Estado: {{ orden.estado }}</h6>
@@ -44,5 +44,3 @@
     </div>
   </div>
 </div>
-
-
