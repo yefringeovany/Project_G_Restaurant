@@ -22,7 +22,7 @@ router.post('/menu/register', verifyToken, upload.single('imagen'), async (req, 
 
     res.status(201).json(nuevoMenu);
   } catch (error) {
-    // console.error('Error al registrar nuevo menú:', error); // para prrueba de testing me error en esta linea (cuando comento la inea se quita el error)
+    console.error('Error al registrar nuevo menú:', error); 
     res.status(500).send('Error interno del servidor');
   }
 });
