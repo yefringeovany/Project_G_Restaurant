@@ -63,9 +63,27 @@ Este proyecto es un sistema de gestión de pedidos diseñado para restaurantes, 
 
 ## 📥 Instalación y Configuración en Localhost
 
-### 1. Clonar el Repositorio
+**Clone the project**
 
 ```bash
-git clone https://github.com/yefringeovany/Project_G_Restaurant.git
-cd (name_proyecto)
+  git clone https://github.com/yefringeovany/Project_G_Restaurant.git
+```
+
+**Go to the project directory**
+
+```bash
+  cd my-project
+```
+
+**Install dependencies**
+
+```bash
+  npm install
+```
+
+**Start the server**
+
+```bash
+  npm run dev
+```
 
