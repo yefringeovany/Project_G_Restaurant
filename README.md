@@ -103,4 +103,27 @@ Este proyecto es un sistema de gestión de pedidos diseñado para restaurantes, 
 ```bash
   El backend estará disponible en: http://localhost:3000
 ```
+## 📥 FRONTEND
+
+**Requirements**
+
+Angular CLI v15 o superior
+
+```bash
+  cd frontend
+```
+```bash
+  npm install
+```
+```bash
+  ng serve
+```
+
+El cliente estará disponible en: http://localhost:4200
+
+👨‍💻 Autor
+[Yefrin Pérez]
+Desarrollador Full Stack
+✉️ [123perezyefrin@gmail.com]
+📁 GitHub
 
