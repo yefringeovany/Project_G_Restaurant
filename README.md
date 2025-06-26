@@ -58,6 +58,6 @@ Este proyecto es un sistema de gestión de pedidos diseñado para restaurantes, 
 ### 1. Clonar el Repositorio
 
 ```bash
-git clone https://github.com/tu_usuario/gestion-pedidos-restaurante.git
-cd gestion-pedidos-restaurante
+git clone https://github.com/yefringeovany/Project_G_Restaurant.git
+cd (name_proyecto)
 
