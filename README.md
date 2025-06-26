@@ -72,7 +72,7 @@ Este proyecto es un sistema de gestión de pedidos diseñado para restaurantes, 
 **Go to the project directory**
 
 ```bash
-  cd my-project
+  cd backend
 ```
 
 **Install dependencies**
@@ -83,7 +83,24 @@ Este proyecto es un sistema de gestión de pedidos diseñado para restaurantes, 
 
 **Start the server**
 
+
+**Create a database in MySQL named restaurant_db**
+
+**Configure archive .env with the credentials**
+
+```bash
+  DB_NAME = ''
+  DB_USER = ''
+  DB_PASS = ''
+  DB_HOST = ''
+  DB_PORT = ''
+```
+**Start the server**
+
 ```bash
   npm run dev
+```
+```bash
+  El backend estará disponible en: http://localhost:3000
 ```
 
