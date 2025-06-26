@@ -24,6 +24,7 @@ Este proyecto es un sistema de gestión de pedidos diseñado para restaurantes, 
 ### 🔐 Inicio de Sesión
 - Ingreso mediante usuario y contraseña.
 - Opción para registrarse si no se tiene una cuenta.
+  ![Image](https://github.com/user-attachments/assets/87ab6ada-4d42-4875-b8b1-f2a2195ce24a)
 
 ### 📝 Registro de Usuario
 - Campos: Nombre, Apellido, Correo Electrónico, Contraseña, Rol.
