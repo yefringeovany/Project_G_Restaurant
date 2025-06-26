@@ -31,6 +31,8 @@ Este proyecto es un sistema de gestión de pedidos diseñado para restaurantes, 
 - Roles disponibles: Mesero, Cocinero, Administrador, etc.
 - Al registrarse, redirecciona automáticamente al login.
 
+  ![Image](https://github.com/user-attachments/assets/e17577d8-6dca-4fe6-b221-2d709ddd303b)
+
 ### 📊 Dashboard
 - Visualización en tiempo real de las órdenes generadas durante el día.
 - Contador automático de órdenes preparadas y entregadas.
