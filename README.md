@@ -36,23 +36,28 @@ Este proyecto es un sistema de gestión de pedidos diseñado para restaurantes, 
 ### 📊 Dashboard
 - Visualización en tiempo real de las órdenes generadas durante el día.
 - Contador automático de órdenes preparadas y entregadas.
+  ![Image](https://github.com/user-attachments/assets/2bd7f86a-07dc-402a-a2c6-fe52f604711c)
 
 ### 📁 Gestión de Categorías
 - Crear nuevas categorías para los menús.
 - Campos: Nombre, Descripción, Estado (ACTIVO o INACTIVO).
+  ![Image](https://github.com/user-attachments/assets/20d8c550-b4b1-46ba-b39d-2e761d485c0c)
 
 ### 🍽️ Gestión de Menú
 - Crear elementos del menú asignados a una categoría.
 - Campos: Categoría, Nombre, Descripción, Precio, Estado, Imagen.
+  ![image](https://github.com/user-attachments/assets/0b535339-5d78-4fb1-98ea-b8ad78ba4bb5)
 
 ### 🧾 Creación de Orden
 - Selección de categoría y menú.
 - Ingreso de cantidad, cálculo automático del monto total y cambio.
 - Ingreso del pago recibido.
+  ![Image](https://github.com/user-attachments/assets/401d01ad-4035-48e0-98d0-1c9c0fb366b8)
 
 ### 👨‍🍳 Vista de Cocina
 - Visualización de pedidos pendientes.
 - Marcar pedidos como "ENTREGADOS" una vez estén listos.
+  ![Image](https://github.com/user-attachments/assets/fdd79e1b-72c7-40c8-bea2-68134869d287)
 
 ---
 
